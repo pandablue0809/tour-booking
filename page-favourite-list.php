@@ -78,7 +78,7 @@ if (!is_user_logged_in()) {
             </a>
           </li>
           <li>
-            <a href="<?php echo home_url(); ?>/my-account/reviews" class="active">
+            <a href="<?php echo home_url(); ?>/my-account/reviews">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/download (2).png" alt="">
               </span>
@@ -86,7 +86,7 @@ if (!is_user_logged_in()) {
             </a>
           </li>
           <li>
-            <a href="<?php echo home_url(); ?>/my-account/favourite-list">
+            <a href="<?php echo home_url(); ?>/my-account/favourite-list" class="active">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/svgviewer-png-output (1).png" alt="">
               </span>
@@ -126,14 +126,14 @@ if (!is_user_logged_in()) {
     </div>
     <div class="account-main-content">
       <div class="border">
-        <h2 data-translate-key="Reviews" class="account-main-content-title">Reviews</h2>       
+        <h2 data-translate-key="Favourite list" class="account-main-content-title">Favourite list</h2>       
         <div class="user-info-empty">
           <img src="<?php echo get_template_directory_uri() ?>/assets/img/Image 3.png" alt="">
           <div class="user-info-empty-title" data-translate-key="Looks a bit empty here">
             Looks a bit empty here
           </div>
-          <div class="user-info-empty-desc" data-translate-key="Why don't you start">
-            Why don't you start booking for your next trip? You'll even earn credits for writing a review after participation.
+          <div class="user-info-empty-desc" data-translate-key="Tap the heart icon on an activity to save it">
+           Tap the heart icon on an activity to save it
           </div>
         </div>
       </div>

@@ -41,7 +41,7 @@
         </div>
         <div class="account-left-sidebar-nav">
           <li>
-            <a href="<?php echo home_url(); ?>/my-account/my-info" class="active">
+            <a href="<?php echo home_url(); ?>/my-account/my-info">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/13924070.png" alt="">
               </span>
@@ -49,7 +49,7 @@
             </a>
           </li>
           <li>
-            <a href="<?php echo home_url(); ?>/my-account/booking-list">
+            <a href="<?php echo home_url(); ?>/my-account/booking-list" class="active">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/svgviewer-png-output.png" alt="">
               </span>

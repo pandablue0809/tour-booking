@@ -76,7 +76,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo home_url(); ?>/my-account/my-info">
+                                <a href="<?php echo home_url(); ?>/my-account/booking-list">
                                     <span>
                                         <img src="<?php echo get_template_directory_uri() ?>/assets/img/svgviewer-png-output.png" alt="">
                                     </span>
