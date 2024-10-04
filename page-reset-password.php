@@ -13,8 +13,9 @@
                         <img src="<?php echo get_template_directory_uri() ?>/assets/img/14562503.png" alt="">
                     </span>
                     <input type="password" id="password" name="password" required>
-                    <span class="modal-form-field-icon">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/8173177.png" alt="">
+                    <span class="modal-form-field-icon toggle-password" data-target="#password">
+                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/8173177.png" alt="" class="hide-eye">
+                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/icons8-eye-24.png" alt="" class="show-eye">
                     </span>
                 </div>
                 <input type="hidden" id="resetKey" name="reset_key" value="<?php echo esc_attr($_GET['key']); ?>">

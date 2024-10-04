@@ -183,5 +183,14 @@
     "Can't find the email": "メールが見つかりませんか? メールアドレスが正しいことを確認するか、スパムフォルダを確認してください。",
     "Reset password": "パスワードをリセット",
     "Reset and log in": "リセットしてログイン",
-    "Upload Avatar": "アップロード"
+    "Upload Avatar": "アップロード",
+    "first name": "名前",
+    "last name": "姓",
+    "Save": "保存",
+    "Cancel": "キャンセル",
+    "Not provided": "提供されていません",
+    "Shinjuku, Tokyo Prefecture, JP": "東京都新宿区",
+    "Change password": "パスワード変更",
+    "Looks a bit empty here": "ここが少し空だと思います。",
+    "Why don't you start": "次の旅行の予約を始めてみませんか？参加後にレビューを書くとクレジットも獲得できます。"
 }

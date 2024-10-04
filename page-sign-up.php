@@ -32,8 +32,9 @@
                             <img src="<?php echo get_template_directory_uri() ?>/assets/img/14562503.png" alt="">
                         </span>
                         <input type="password" id="password" name="password" data-translate-key="PassWord" placeholder="PassWord" required>
-                        <span class="modal-form-field-icon">
-                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/8173177.png" alt="">
+                        <span class="modal-form-field-icon toggle-password" data-target="#password">
+                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/8173177.png" alt="" class="hide-eye">
+                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/icons8-eye-24.png" alt="" class="show-eye">
                         </span>
                     </div>
                     <div class="modal-form-field">
@@ -41,8 +42,9 @@
                             <img src="<?php echo get_template_directory_uri() ?>/assets/img/6115959.png" alt="">
                         </span>
                         <input type="password" id="conf_password" name="conf_password" data-translate-key="Confirm password" placeholder="Confirm password" required>
-                        <span class="modal-form-field-icon">
-                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/8173177.png" alt="">
+                        <span class="modal-form-field-icon toggle-password" data-target="#conf_password">
+                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/8173177.png" alt="" class="hide-eye">
+                            <img src="<?php echo get_template_directory_uri() ?>/assets/img/icons8-eye-24.png" alt="" class="show-eye">
                         </span>
                     </div>
                     <button type="submit"  id="signUpBtn" class="modal-form-btn">

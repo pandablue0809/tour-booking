@@ -183,5 +183,14 @@
     "Can't find the email": "Can't find the email? Make sure the email address is correct or check your spam folder.",
     "Reset password": "Reset password",
     "Reset and log in": "Reset and log in",
-    "Upload Avatar": "Upload Avatar"
+    "Upload Avatar": "Upload Avatar",
+    "first name": "first name",
+    "last name": "last name",
+    "Save": "Save",
+    "Cancel": "Cancel",
+    "Not provided": "Not provided",
+    "Shinjuku, Tokyo Prefecture, JP": "Shinjuku, Tokyo Prefecture, JP",
+    "Change password": "Change password",
+    "Looks a bit empty here": "Looks a bit empty here",
+    "Why don't you start": "Why don't you start booking for your next trip? You'll even earn credits for writing a review after participation."
 }

@@ -41,7 +41,7 @@
         </div>
         <div class="account-left-sidebar-nav">
           <li>
-            <a href="" class="active">
+            <a href="<?php echo home_url(); ?>/my-account/my-info" class="active">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/13924070.png" alt="">
               </span>
@@ -49,7 +49,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="<?php echo home_url(); ?>/my-account/booking-list">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/svgviewer-png-output.png" alt="">
               </span>
@@ -57,7 +57,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="<?php echo home_url(); ?>/my-account/reviews">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/download (2).png" alt="">
               </span>
@@ -65,7 +65,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="<?php echo home_url(); ?>/my-account/favourite-list">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/svgviewer-png-output (1).png" alt="">
               </span>
@@ -73,7 +73,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="<?php echo home_url(); ?>/my-account/setting">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/download (3).png" alt="">
               </span>
@@ -83,7 +83,7 @@
         </div>
         <div class="account-left-sidebar-item">
           <li>
-            <a href="">
+            <a href="<?php echo home_url(); ?>/help">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/10275409-removebg-preview.png" alt="">
               </span>
@@ -93,7 +93,7 @@
         </div>
         <div class="account-left-sidebar-item">
           <li>
-            <a href="">
+            <a href="<?php echo wp_logout_url( home_url() ); ?>">
               <span>
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/logout-8.png" alt="">
               </span>

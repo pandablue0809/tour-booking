@@ -2565,6 +2565,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .account-main-content .border{
   padding: 20px;
+  min-height: calc(100vh - 200px);
 }
 
 .account-main-content-title {
@@ -2873,6 +2874,14 @@ input[type="range"]::-webkit-slider-thumb {
   right: 20px;
 }
 
+.toggle-password {
+  cursor: pointer;
+}
+
+.show-eye {
+  display: none;
+}
+
 @keyframes spin {
   0% {
       transform: rotate(0deg);
@@ -2915,6 +2924,10 @@ input[type="range"]::-webkit-slider-thumb {
   color: white;
   font-size: 14px;
   cursor: pointer;
+}
+
+.personal-info-field-value-edit {
+  display: none;
 }
 
 .personal-info-field-value-edit input {
@@ -2962,6 +2975,67 @@ input[type="range"]::-webkit-slider-thumb {
   background-color: #6056D6;
   color: white;
 }
+
+.change-password-save-btn {
+  background-color: #6056D6;
+  color: white;
+  font-size: 20px;
+  padding: 10px 20px;
+  border: 1px solid;
+  border-color: #6056D6;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.change-password-save-btn .spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  right: 20px;
+}
+
+#changepasswordform {
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+}
+
+.success-message {
+  text-align: center;
+  color: green;
+}
+
+.user-info-empty {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.user-info-empty img {
+  width: 150px;
+  margin: auto;
+}
+
+.user-info-empty-title {
+  margin: 28px 0;
+  font-size: 32px;
+  font-weight: bold;
+}
+
 
 @media screen and (max-width: 1280px) {
   .header-content {

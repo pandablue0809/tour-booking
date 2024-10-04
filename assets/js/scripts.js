@@ -443,3 +443,24 @@ $(function() {
         }
     });
 });
+
+jQuery(document).ready(function($) {
+    // Toggle password visibility for all password fields
+    $('.toggle-password').on('click', function() {
+        var target = $(this).data('target'); // Get the target input field
+        var passwordField = $(target);
+        var passwordFieldType = passwordField.attr('type');
+
+        // Toggle between 'password' and 'text'
+        if (passwordFieldType === 'password') {
+            passwordField.attr('type', 'text'); // Show password
+            $(this).find('.show-eye').show(); 
+            $(this).find('.hide-eye').hide(); // Replace with open eye icon
+        } else {
+            passwordField.attr('type', 'password'); // Hide password
+            $(this).find('.hide-eye').show(); 
+            $(this).find('.show-eye').hide(); 
+        }
+    });
+});
+

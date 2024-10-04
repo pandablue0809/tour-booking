@@ -398,6 +398,133 @@ function handle_avatar_upload_ajax() {
 }
 add_action('wp_ajax_upload_avatar', 'handle_avatar_upload_ajax');
 
+function enqueue_user_info_scripts() {
+    wp_enqueue_script('jquery');
+    
+    // Enqueue your script that contains the jQuery code
+    wp_enqueue_script('user-info-ajax', get_template_directory_uri() . '/assets/js/user-info.js', array('jquery'), null, true);
+  
+    // Pass AJAX URL and nonce to the script
+    wp_localize_script('user-info-ajax', 'userinfoAjax', array(
+      'ajax_url' => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('user_info_nonce')
+    ));
+  }
+  add_action('wp_enqueue_scripts', 'enqueue_user_info_scripts');
+
+  function update_user_info() {
+    // Verify the nonce for security
+    check_ajax_referer('user_info_nonce', 'nonce');
+
+    // Get the current user ID
+    $user_id = get_current_user_id();
+
+    // Check if the user is logged in
+    if (!$user_id) {
+        wp_send_json_error(array('message' => 'User not logged in.'));
+        return;
+    }
+
+    $updated_value = ''; // This will store the new value to return
+    $field_to_update = ''; // This will store the field being updated
+
+    // Update based on which field was passed in the request
+    if (isset($_POST['first_name']) && isset($_POST['last_name'])) {
+        $first_name = sanitize_text_field($_POST['first_name']);
+        $last_name = sanitize_text_field($_POST['last_name']);
+        
+        // Update first and last name as user meta fields
+        update_user_meta($user_id, 'first_name', $first_name);
+        update_user_meta($user_id, 'last_name', $last_name);
+
+        $updated_value = $first_name . ' ' . $last_name;
+        $field_to_update = 'Full Name';
+        
+    } elseif (isset($_POST['email'])) {
+        $email = sanitize_email($_POST['email']);
+        
+        // Update email through wp_update_user since it's part of the main user table
+        $user_data = array(
+            'ID' => $user_id,
+            'user_email' => $email,
+        );
+        $updated_value = $email;
+        $field_to_update = 'Email';
+        wp_update_user($user_data);
+
+    } elseif (isset($_POST['phone_number'])) {
+        $phone_number = sanitize_text_field($_POST['phone_number']);
+        update_user_meta($user_id, 'phone_number', $phone_number);
+        $updated_value = $phone_number;
+        $field_to_update = 'Phone Number';
+        
+    } elseif (isset($_POST['birthday'])) {
+        $birthday = sanitize_text_field($_POST['birthday']);
+        update_user_meta($user_id, 'birthday', $birthday);
+        $updated_value = $birthday;
+        $field_to_update = 'Date of Birth';
+        
+    } elseif (isset($_POST['home_town'])) {
+        $home_town = sanitize_text_field($_POST['home_town']);
+        update_user_meta($user_id, 'home_town', $home_town);
+        $updated_value = $home_town;
+        $field_to_update = 'Home Town';
+        
+    } else {
+        wp_send_json_error(array('message' => 'No valid field to update.'));
+        return;
+    }
+
+    // Return the updated field value to the front-end
+    wp_send_json_success(array('updated_value' => $updated_value, 'field' => $field_to_update));
+
+    wp_die();
+}
+add_action('wp_ajax_update_user_info', 'update_user_info');
+
+function enqueue_setting_scripts() {
+    wp_enqueue_script('jquery');
+    
+    // Enqueue your script that contains the jQuery code
+    wp_enqueue_script('change-password-ajax', get_template_directory_uri() . '/assets/js/setting.js', array('jquery'), null, true);
+  
+    // Pass AJAX URL and nonce to the script
+    wp_localize_script('change-password-ajax', 'changepasswordAjax', array(
+      'ajax_url' => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('chang_password_nonce')
+    ));
+  }
+  add_action('wp_enqueue_scripts', 'enqueue_setting_scripts');
+
+  function handle_ajax_change_password() {
+    // Check if the user is logged in
+    if (!is_user_logged_in()) {
+        wp_send_json_error('You are not logged in.'); // Send error response
+    }
+
+    // Verify nonce for security
+    if (!isset($_POST['change_password_nonce']) || !wp_verify_nonce($_POST['change_password_nonce'], 'chang_password_nonce')) {
+        wp_send_json_error('Nonce verification failed.'); // Send error response
+    }
+
+    // Get current user ID
+    $user_id = get_current_user_id();
+    $new_password = sanitize_text_field($_POST['password']);
+
+    // Update the user's password
+    $result = wp_set_password($new_password, $user_id);
+
+    if (is_wp_error($result)) {
+        wp_send_json_error('Password could not be changed.'); // Send error response
+    } else {
+        wp_send_json_success('Password changed successfully!'); // Send success response
+    }
+
+    // Always terminate the script
+    wp_die();
+}
+
+add_action('wp_ajax_change_password', 'handle_ajax_change_password');
 
 ?>
 

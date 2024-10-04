@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="<?php echo home_url(); ?>/my-account/setting">
                                 <span>
                                     <img src="<?php echo get_template_directory_uri() ?>/assets/img/download (3).png" alt="">
                                 </span>
