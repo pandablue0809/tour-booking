@@ -104,11 +104,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to apply the selected currency to the page
     function applyCurrency(currency) {
-        // You can implement logic to change prices or any other currency-related elements
-        const selectedCurrency = sessionStorage.getItem('currency') || 'JPY'; // Default to JPY
+        const prices = document.querySelectorAll('.tour-currency');
+        prices.forEach(price => {
+            const priceJpy = price.getAttribute('data-price-jpy');
+            const priceUsd = price.getAttribute('data-price-usd');
 
-        // Update the currency in the button (if the page is reloaded)
-        selectedCurrencyDisplay.textContent = selectedCurrency;
+            if (currency === 'USD') {
+                price.textContent = `$ ${priceUsd}`;
+            } else {
+                price.textContent = `¥ ${priceJpy}`;
+            }
+        });
     }
 
     // On page load, apply the saved currency

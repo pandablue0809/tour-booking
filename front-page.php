@@ -80,78 +80,72 @@
     <div class="section02-slider">
       <div class="section02-slider-container">
         <div class="section02-tours">
-          <div class="section02-tour">
-            <div class="section02-tour-img">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png" alt="">
-            </div>
-            <div class="section02-tour-desc">
-              <div class="section02-tour-title">item-subttl·Tokyo</div>
-              <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
-              <div class="section02-tour-tag">Bestseller</div>
-              <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-              <div class="section02-tour-price">From  ¥ 5,958</div>
-            </div>
-          </div>
-          <div class="section02-tour">
-            <div class="section02-tour-img">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png" alt="">
-            </div>
-            <div class="section02-tour-desc">
-              <div class="section02-tour-title">item-subttl·Tokyo</div>
-              <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
-              <div class="section02-tour-tag">Bestseller</div>
-              <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-              <div class="section02-tour-price">From  ¥ 5,958</div>
-            </div>
-          </div>
-          <div class="section02-tour">
-            <div class="section02-tour-img">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png" alt="">
-            </div>
-            <div class="section02-tour-desc">
-              <div class="section02-tour-title">item-subttl·Tokyo</div>
-              <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
-              <div class="section02-tour-tag">Bestseller</div>
-              <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-              <div class="section02-tour-price">From  ¥ 5,958</div>
-            </div>
-          </div>
-          <div class="section02-tour">
-            <div class="section02-tour-img">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png" alt="">
-            </div>
-            <div class="section02-tour-desc">
-              <div class="section02-tour-title">item-subttl·Tokyo</div>
-              <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
-              <div class="section02-tour-tag">Bestseller</div>
-              <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-              <div class="section02-tour-price">From  ¥ 5,958</div>
-            </div>
-          </div>
-          <div class="section02-tour">
-            <div class="section02-tour-img">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png" alt="">
-            </div>
-            <div class="section02-tour-desc">
-              <div class="section02-tour-title">item-subttl·Tokyo</div>
-              <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
-              <div class="section02-tour-tag">Bestseller</div>
-              <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-              <div class="section02-tour-price">From  ¥ 5,958</div>
-            </div>
-          </div>
-          <div class="section02-tour">
-            <div class="section02-tour-img">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png" alt="">
-            </div>
-            <div class="section02-tour-desc">
-              <div class="section02-tour-title">item-subttl·Tokyo</div>
-              <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
-              <div class="section02-tour-tag">Bestseller</div>
-              <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-              <div class="section02-tour-price">From  ¥ 5,958</div>
-            </div>
-          </div>
+          <?php
+            // Query for the custom post type 'tours'
+            $args = array(
+                'post_type' => 'tours',
+                'posts_per_page' => 8, // Display all tours
+            );
+            $tours_query = new WP_Query($args);
+            if ($tours_query->have_posts()) : ?>
+             <?php while ($tours_query->have_posts()) : $tours_query->the_post(); ?>
+              <div class="section02-tour">
+                <div class="section02-tour-img">
+                <?php
+                $images = get_field('images');
+                if (!empty($images) && is_array($images)) {
+                  $first_image = $images['image_01'];
+                  $first_image_url = isset($first_image['url']) ? esc_url($first_image['url']) : get_template_directory_uri() . '/assets/img/ezgif-7-594f91690c.png';
+                } else {
+                  $first_image_url = get_template_directory_uri() . '/assets/img/noImage.png';
+                }
+                ?>
+                <img src="<?php echo $first_image_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                </div>
+                <div class="section02-tour-desc">
+                  <?php
+                    // Get the first term of the 'attractions' taxonomy
+                    $attractions = get_the_terms(get_the_ID(), 'attractions');
+                    if ($attractions && !is_wp_error($attractions)) {
+                        // Get ACF fields for English and Japanese terms
+                        $attraction_name_en = get_field('name_en', 'attractions_' . $attractions[0]->term_id);
+                        $attraction_name_jp = $attractions[0]->name; // Japanese name (default term name)
+                    } else {
+                        $attraction_name_en = '';
+                        $attraction_name_jp = '';
+                    }
+
+                    // Get the first term of the 'destinations' taxonomy
+                    $destinations = get_the_terms(get_the_ID(), 'destinations');
+                    if ($destinations && !is_wp_error($destinations)) {
+                        // Get ACF fields for English and Japanese terms
+                        $destination_name_en = get_field('name_en', 'destinations_' . $destinations[0]->term_id);
+                        $destination_name_jp = $destinations[0]->name; // Japanese name (default term name)
+                    } else {
+                        $destination_name_en = '';
+                        $destination_name_jp = '';
+                    }
+
+                    $title_en = get_the_title();
+                    $title_jp = get_field('title_jp');
+                  ?>
+                  <div class="section02-tour-title translate" 
+                      data-name-en="<?php echo esc_attr($attraction_name_en . ' · ' . $destination_name_en); ?>" 
+                      data-name-jp="<?php echo esc_attr($attraction_name_jp . ' · ' . $destination_name_jp); ?>">
+                      <?php echo esc_html($attraction_name_jp . ' · ' . $destination_name_jp); ?>
+                  </div>
+                  <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
+                  <div class="section02-tour-tag">Bestseller</div>
+                  <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
+                  <div class="section02-tour-price">From  ¥ 5,958</div>
+                </div>
+              </div>
+            <?php endwhile; ?>
+            <?php else : ?>
+                <p><?php _e('No tours found.'); ?></p>
+            <?php endif; ?>
+
+          <?php wp_reset_postdata(); ?>
         </div>
       </div>
       <div class="section02-prev">
