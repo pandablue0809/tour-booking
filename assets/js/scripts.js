@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.translate').forEach(element => {
                 const text = element.getAttribute(`data-name-${lang}`); 
                 if (text) {
-                    element.textContent = text; 
+                    element.innerHTML = text;
                 }
             });
     }
