@@ -589,7 +589,7 @@ $wp_query = $query;
                                 </div>
                                 <div class="tour-item-desc-time">
                                     <img src="<?php echo get_template_directory_uri() ?>/assets/img/set_of_glyph_clocks.png" alt="">
-                                    <span><?php echo esc_attr($maxTime); ?><span><?php echo esc_attr($timeOption); ?></span></span>
+                                    <span><?php echo esc_attr($maxTime); ?><span data-translate-key="<?php echo esc_attr($timeOption); ?>"></span></span>
                                 </div>
                                 <?php 
                                     if($free_cancellation === true) 
