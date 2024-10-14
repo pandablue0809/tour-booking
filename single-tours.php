@@ -56,7 +56,7 @@
           Book online or call:
         </span>
         <span>
-          <?php 
+         <?php 
             $phone = get_post_meta(get_the_ID(), 'phone', true);
             if ($phone) {
                 echo '<a href="tel:' . esc_attr($phone) . '">' . esc_html($phone) . '</a>';
@@ -67,15 +67,15 @@
     </div>
   </div>
   <div class="tour-detail-head container">
-    <?php 
+	<?php 
     $title_en = get_the_title();
     $title_jp = get_post_meta(get_the_ID(), 'title_jp', true);
-    $destinations = get_the_terms(get_the_ID(), 'destinations');
+	$destinations = get_the_terms(get_the_ID(), 'destinations');
     $destination = $destinations[0];
     $destination_name_en = get_field('name_en', $destination) ?: $destination->name; 
     $destination_name_jp = $destination->name;
-    $tags = get_the_tags();
-    $images = get_field('images');
+	$tags = get_the_tags();
+	$images = get_field('images');
     if (!empty($images) && is_array($images)) {
       $image_01 = $images['image_01'];
       $image_02 = $images['image_02'];
@@ -91,49 +91,49 @@
       $image_03_url = get_template_directory_uri() . '/assets/img/noImage.png';
       $image_04_url = get_template_directory_uri() . '/assets/img/noImage.png';
     }
-    $possible_number_of_bookings = get_field('possible_number_of_bookings');
+	$possible_number_of_bookings = get_field('possible_number_of_bookings');
     $min_number = $possible_number_of_bookings['min_number'];
     $max_number = !empty($possible_number_of_bookings['max_number']) ? $possible_number_of_bookings['max_number'] :  $min_number;
-    $participating_age = get_field('participating_age');
+	$participating_age = get_field('participating_age');
     $min_age = $participating_age['min_age'];
     $max_age = $participating_age['max_age'];
-    $experience_time = get_field('experience_time');
-    $min_time = $experience_time['min_time'];
+	$experience_time = get_field('experience_time');
+	$min_time = $experience_time['min_time'];
     $max_time = $experience_time['max_time'];
     $experience_time_option = $experience_time['option'];
-    $free_cancellation = get_field('free_cancellation');
-    $overView_jp = get_field('content_jp');
+	$free_cancellation = get_field('free_cancellation');
+	$overView_jp = get_field('content_jp');
     $overView_en = get_the_content();
-    $included_jp = get_field('included_jp');
+	$included_jp = get_field('included_jp');
     $unincluded_jp = get_field('unincluded_jp');
     $included_en = get_field('included_en');
     $unincluded_en = get_field('unincluded_en');
-    $pickup_points = get_field('pickup_points');
+	$pickup_points = get_field('pickup_points');
     $pickup_points_address_jp = $pickup_points['pickup_points_address_jp'];
     $pickup_points_address_en = $pickup_points['pickup_points_address_en'];
     $pickup_points_google_map = $pickup_points['google_map'];
     $pickup_details_jp = $pickup_points['pickup_details_jp'];
     $pickup_details_en = $pickup_points['pickup_details_en'];
-    $meeting_point = get_field('meeting_point');
+	$meeting_point = get_field('meeting_point');
     $meeting_point_address_jp = $meeting_point['meeting_point_address_jp'];
     $meeting_point_address_en = $meeting_point['meeting_point_address_en'];
     $meeting_point_google_map = $meeting_point['google_map'];
     $meeting_detail_jp = $meeting_point['meeting_detail_jp'];
     $meeting_detail_en = $meeting_point['meeting_detail_en'];
-    $end_point = get_field('end_point');
-    $end_point_address_en = $end_point['end_point_address_en'];
+	$end_point = get_field('end_point');
+	$end_point_address_en = $end_point['end_point_address_en'];
     $end_point_address_jp = $end_point['end_point_address_jp'];
     $end_point_google_map = $end_point['google_map'];
     $end_point_description_en = $end_point['end_point_description_en'];
     $end_point_description_jp = $end_point['end_point_description_jp'];
-    $additional_info_jp = get_field('additional_info_jp');
+	$additional_info_jp = get_field('additional_info_jp');
     $additional_info_en = get_field('additional_info_en');
     $other_description_jp = get_field('other_description_jp');
     $other_description_en = get_field('other_description_en');
-    $price = get_field('price');
+	$price = get_field('price');
     $price_usd = $price['usd'];
     $price_jpy = $price['jpy'];
-    $social = get_field('social');
+	$social = get_field('social');
     $facebook_link = $social['facebook'];
     $twitter_link = $social['twitter'];
     $instagram_link = $social['instagram']
@@ -144,15 +144,15 @@
       <span>10,000</span>
       <span data-translate-key="(Reviews)">(Reviews)</span>
       <span class="tour-detail-head-star-span">|</span>
-      <span class="translate" data-name-en="<?php echo esc_attr($destination_name_en); ?>" data-name-jp="<?php echo esc_attr($destination_name_jp); ?>"><?php echo esc_attr($destination_name_en); ?></span>
+     <span class="translate" data-name-en="<?php echo esc_attr($destination_name_en); ?>" data-name-jp="<?php echo esc_attr($destination_name_jp); ?>"><?php echo esc_attr($destination_name_en); ?></span>
     </div>
     <div class="tour-detail-head-tag-list">
-      <?php 
+	<?php 
       if ($tags) {
         foreach ($tags as $tag) {
             $tag_en = get_field('name_en', $tag) ?: $tag->name;
             $tag_jp = $tag->name;
-            echo '<span class="translate" data-name-en="'.$tag_en.'" data-name-jp="'.$tag_jp.'">' . esc_html($tag_en) . '</span>'; // Display each tag
+            echo '<span class="translate" data-name-en="'.$tag_en.'" data-name-jp="'.$tag_jp.'">' . esc_html($tag_en) . '</span>';
         }
       }
       ?>
@@ -164,32 +164,32 @@
         <div>
           <div class="tour-detail-slider-bar">
             <div class="tour-detail-slider-bar-img active">
-              <img src="<?php echo $image_01_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+               <img src="<?php echo $image_01_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
             <div class="tour-detail-slider-bar-img">
-              <img src="<?php echo $image_02_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+               <img src="<?php echo $image_02_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
             <div class="tour-detail-slider-bar-img">
-              <img src="<?php echo $image_03_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+               <img src="<?php echo $image_03_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
             <div class="tour-detail-slider-bar-img">
-              <img src="<?php echo $image_04_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+               <img src="<?php echo $image_04_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
           </div>
         </div>
         <div class="tour-detail-slider">
           <div class="tour-detail-slider-container">
             <div class="tour-detail-slider-img">
-              <img src="<?php echo $image_01_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                 <img src="<?php echo $image_01_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
               </div>
               <div class="tour-detail-slider-img">
-              <img src="<?php echo $image_02_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                <img src="<?php echo $image_02_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
               </div>
               <div class="tour-detail-slider-img">
-              <img src="<?php echo $image_03_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                <img src="<?php echo $image_03_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
               </div>
               <div class="tour-detail-slider-img">
-              <img src="<?php echo $image_04_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                 <img src="<?php echo $image_04_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
               </div>
           </div>
           <span class="tour-detail-slider-left-arrow">
@@ -204,16 +204,16 @@
         <div class="tour-detail-main-content-tag">
           <p data-translate-key="Possible number of bookings">Possible number of bookings</p>
           <p class="tour-detail-main-content-tag-info">
-            <?php 
-            echo $min_number;
-            echo ' ～ ';
-            echo $max_number
+		  	<?php 
+				echo $min_number;
+				echo ' ～ ';
+				echo $max_number;
             ?>
-          </p>
+		  </p>
         </div>
         <div class="tour-detail-main-content-tag">
           <p data-translate-key="Participating age">Participating age</p>
-          <p class="tour-detail-main-content-tag-info translate" data-name-en="<?php echo esc_attr($min_age); ?> Age  ～ <?php echo esc_attr($max_age); ?> Age" data-name-jp="<?php echo esc_attr($min_age); ?> 歳  ～ <?php echo esc_attr($max_age); ?> 歳" ><?php echo esc_attr($min_age); ?> Age  ～ <?php echo esc_attr($max); ?> Age</p>
+          <p class="tour-detail-main-content-tag-info translate" data-name-en="<?php echo esc_attr($min_age); ?> Age  ～ <?php echo esc_attr($max_age); ?> Age" data-name-jp="<?php echo esc_attr($min_age); ?> 歳  ～ <?php echo esc_attr($max_age); ?> 歳" ><?php echo esc_attr($min_age); ?> Age  ～ <?php echo esc_attr($max_age); ?> Age</p>
         </div>
         <div class="tour-detail-main-content-tag">
           <p data-translate-key="Experience time">Experience time</p>
@@ -225,12 +225,12 @@
               echo $max_time;
               ?>
             </span>
-            <span data-translate-key="<?php echo esc_attr($experience_time_option); ?>"></span>
-          ​</p>
+            <span data-translate-key="<?php echo esc_attr($experience_time_option); ?>"><?php echo esc_attr($experience_time_option); ?></span>
+          </p>
         </div>
       </div>
       <div class="tour-detail-main-content-categorys">
-        <?php 
+ 		<?php 
         if($free_cancellation === true) 
         echo '
         <div class="tour-detail-main-content-category">
@@ -250,26 +250,11 @@
         </div>     
         ';
         ?>
-        <!-- <div class="tour-detail-main-content-category">
-          <span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
-              <g id="Group_17" data-name="Group 17" transform="translate(-748 -696)">
-                <g id="Ellipse_4" data-name="Ellipse 4" transform="translate(748 696)" fill="#fff" stroke="#212121" stroke-width="1">
-                  <circle cx="7.5" cy="7.5" r="7.5" stroke="none"/>
-                  <circle cx="7.5" cy="7.5" r="7" fill="none"/>
-                </g>
-                <line id="Line_160" data-name="Line 160" x2="2.5" y2="2" transform="translate(752.5 704.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                <line id="Line_161" data-name="Line 161" x1="5" y2="5" transform="translate(754.5 701.5)" fill="none" stroke="#212121" stroke-width="1"/>
-              </g>
-            </svg>
-          </span>
-          <span>Specials category name list here</span>
-        </div> -->
       </div>
       <div class="tour-detail-overview">
         <h2 class="tour-detail-overview-title" data-translate-key="Overview">Overview</h2>
         <div class="tour-detail-overview-desc translate" data-name-en="<?php echo esc_attr($overView_en); ?>" data-name-jp="<?php echo esc_attr($overView_jp); ?>">
-          <?php echo esc_html($overView_en); ?>
+			<?php echo esc_html($overView_jp); ?>
         </div>
       </div>
       <div class="tour-detail-section">
@@ -305,7 +290,7 @@
                 <?php endif; ?>
               </div>
               <div class="include-list-02">
-                <?php if ($unincluded_jp && $unincluded_en): ?>
+               <?php if ($unincluded_jp && $unincluded_en): ?>
                   <?php foreach ($unincluded_jp as $key => $unincluded_jp_item): ?>
                       <?php if (!empty($unincluded_jp_item) && !empty($unincluded_en[$key])): // Ensure both JP and EN are not empty ?>
                           <li>
@@ -351,8 +336,10 @@
                   <span data-translate-key="Pickup points">Pickup points</span>
                 </div>
                 <div class="tour-detail-point-desc">
-                  <p class="translate" data-name-en="<?php echo esc_attr($pickup_points_address_en); ?>" data-name-jp="<?php echo esc_attr($pickup_points_address_jp); ?>">
+                  <p>
+                    <p class="translate" data-name-en="<?php echo esc_attr($pickup_points_address_en); ?>" data-name-jp="<?php echo esc_attr($pickup_points_address_jp); ?>">
                     <?php echo esc_attr($pickup_points_address_en); ?>
+                  </p>
                   </p>
                   <div class="tour-detail-point-desc-googlemap">
                     <a href="<?php echo esc_attr($pickup_points_google_map); ?>" target="_blank">
@@ -394,7 +381,7 @@
                     <?php echo esc_attr($meeting_point_address_en); ?>
                   </p>
                   <div class="tour-detail-point-desc-googlemap">
-                    <a href=" <?php echo esc_attr($meeting_point_google_map); ?>" target="_blank">
+                    <a href="<?php echo esc_attr($meeting_point_google_map); ?>" target="_blank">
                       <span data-translate-key="Open in Google Maps">Open in Google Maps</span>
                       <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="7.748" height="13.76" viewBox="0 0 7.748 13.76">
@@ -492,7 +479,7 @@
       <div class="tour-detail-section">
         <div class="tour-detail-additionalInfo">
           <div class="tour-detail-section-head">
-            <h2 class="tour-detail-section-title" data-translate-key="Additional info">Additional Info</h2>
+            <h2 class="tour-detail-section-title" data-translate-key="Additional Info">Additional Info</h2>
             <span class="tour-detail-section-arrow-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="22.142" height="12.044" viewBox="0 0 22.142 12.044">
                 <g id="Group_94" data-name="Group 94" transform="translate(21.435 0.707) rotate(90)">
@@ -535,7 +522,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td data-translate-key="Display of the Specified">Display of the Specified Commercial Transactions Act</td>
+                  <td data-translate-key="Display of the Specified Commercial Transactions Act">Display of the Specified Commercial Transactions Act</td>
                   <td><a href="" data-translate-key="Display of the Specified Commercial">Display of the Specified Commercial Transactions Act link</a></td>
                 </tr>
                 <tr>
@@ -689,7 +676,7 @@
           </div>
           <div class="selete-member">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/1077114.png" alt="">
-            <input type="number" name="" id="" min="1" max="<?php echo esc_attr($max_number)?>" value="2">          
+            <input type="number" name="" id="" min="<?php echo esc_attr($min_number)?>" max="<?php echo esc_attr($max_number)?>" value="2">          
           </div>          
         </div>
         <div class="tour-detail-book-selete-time">
@@ -733,114 +720,111 @@
       <p class="contact-section03-desc" data-translate-key="sitedescription">"site name" is the premier activity booking platform in Japan, offering easy access to a vast selection of experiences across the nation. With partnerships encompassing over 6,000 suppliers, we provide an extensive range of more than 400 activity types, including over 18,000 outdoor adventures, DIY experiences, day trips, leisure pursuits, and online experiences. Available in Japanese, Mandarin (Traditional and Simplified), Korean, and Thai, "site name" caters to a global clientele, whether booking online or through travel agencies. Our network includes over 200 online media outlets that feature popular budget tours and the latest travel tips for both domestic and international destinations. Enjoy exclusive discounts, best-price guarantees, and earn points on every booking. Book today and discover the best-priced outdoor activities, day trips, leisure activities, and online experiences with "site name"!</p>
     </div>
   </section>
-  <section class="section02 container">
-    <h2 class="section02-title" data-translate-key="Recently viewed">Recently viewed</h2>
-    <div class="section02-slider">
-        <div class="section02-slider-container">
-            <div class="section02-tours">
-                <div class="section02-tour">
-                    <div class="section02-tour-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png"
-                            alt="">
-                    </div>
-                    <div class="section02-tour-desc">
-                        <div class="section02-tour-title">item-subttl·Tokyo</div>
-                        <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title
-                            item-main Japan</div>
-                        <div class="section02-tour-tag">Bestseller</div>
-                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+
-                            booked</div>
-                        <div class="section02-tour-price">From ¥ 5,958</div>
-                    </div>
-                </div>
-                <div class="section02-tour">
-                    <div class="section02-tour-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png"
-                            alt="">
-                    </div>
-                    <div class="section02-tour-desc">
-                        <div class="section02-tour-title">item-subttl·Tokyo</div>
-                        <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title
-                            item-main Japan</div>
-                        <div class="section02-tour-tag">Bestseller</div>
-                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+
-                            booked</div>
-                        <div class="section02-tour-price">From ¥ 5,958</div>
-                    </div>
-                </div>
-                <div class="section02-tour">
-                    <div class="section02-tour-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png"
-                            alt="">
-                    </div>
-                    <div class="section02-tour-desc">
-                        <div class="section02-tour-title">item-subttl·Tokyo</div>
-                        <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title
-                            item-main Japan</div>
-                        <div class="section02-tour-tag">Bestseller</div>
-                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+
-                            booked</div>
-                        <div class="section02-tour-price">From ¥ 5,958</div>
-                    </div>
-                </div>
-                <div class="section02-tour">
-                    <div class="section02-tour-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png"
-                            alt="">
-                    </div>
-                    <div class="section02-tour-desc">
-                        <div class="section02-tour-title">item-subttl·Tokyo</div>
-                        <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title
-                            item-main Japan</div>
-                        <div class="section02-tour-tag">Bestseller</div>
-                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+
-                            booked</div>
-                        <div class="section02-tour-price">From ¥ 5,958</div>
-                    </div>
-                </div>
-                <div class="section02-tour">
-                    <div class="section02-tour-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png"
-                            alt="">
-                    </div>
-                    <div class="section02-tour-desc">
-                        <div class="section02-tour-title">item-subttl·Tokyo</div>
-                        <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title
-                            item-main Japan</div>
-                        <div class="section02-tour-tag">Bestseller</div>
-                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+
-                            booked</div>
-                        <div class="section02-tour-price">From ¥ 5,958</div>
-                    </div>
-                </div>
-                <div class="section02-tour">
-                    <div class="section02-tour-img">
-                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/ezgif-7-594f91690c.png"
-                            alt="">
-                    </div>
-                    <div class="section02-tour-desc">
-                        <div class="section02-tour-title">item-subttl·Tokyo</div>
-                        <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title
-                            item-main Japan</div>
-                        <div class="section02-tour-tag">Bestseller</div>
-                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+
-                            booked</div>
-                        <div class="section02-tour-price">From ¥ 5,958</div>
-                    </div>
+<section class="section02 container">
+        <h2 class="section02-title" data-translate-key="Recently Viewed Tours">Recently Viewed Tours</h2>
+        <div class="section02-slider">
+            <div class="section02-slider-container">
+                <div class="section02-tours">
+                    <?php
+                    // Get the recent tours from the cookie
+                    $recent_tours = isset($_COOKIE['recent_tours']) ? json_decode(stripslashes($_COOKIE['recent_tours']), true) : [];
+
+                    if (!empty($recent_tours)) {
+                        // Query for the recently viewed tours based on the cookie values
+                        $args = array(
+                            'post_type' => 'tours',
+                            'post__in' => $recent_tours,  // Only include recently viewed tours
+                            'orderby' => 'post__in'  // Preserve the order from the cookie
+                        );
+                        $recent_tours_query = new WP_Query($args);
+
+                        if ($recent_tours_query->have_posts()) : 
+                            while ($recent_tours_query->have_posts()) : $recent_tours_query->the_post(); ?>
+                                <a href="<?php echo esc_url(get_permalink()); ?>" class="section02-tour">
+                                    <div class="section02-tour-img">
+                                        <?php
+                                        $images = get_field('images');
+                                        if (!empty($images) && is_array($images)) {
+                                            $first_image = $images['image_01'];
+                                            $first_image_url = isset($first_image['url']) ? esc_url($first_image['url']) : get_template_directory_uri() . '/assets/img/noImage.png';
+                                        } else {
+                                            $first_image_url = get_template_directory_uri() . '/assets/img/noImage.png';
+                                        }
+                                        ?>
+                                        <img src="<?php echo $first_image_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                                    </div>
+                                    <div class="section02-tour-desc">
+                                        <?php
+                                        // Get the first term of the 'attractions' taxonomy
+                                        $attractions = get_the_terms(get_the_ID(), 'attractions');
+                                        if ($attractions && !is_wp_error($attractions)) {
+                                            $attraction_name_en = get_field('name_en', 'attractions_' . $attractions[0]->term_id);
+                                            $attraction_name_jp = $attractions[0]->name; // Japanese name (default term name)
+                                        } else {
+                                            $attraction_name_en = 'Tour';
+                                            $attraction_name_jp = '旅行';
+                                        }
+
+                                        // Get the first term of the 'destinations' taxonomy
+                                        $destinations = get_the_terms(get_the_ID(), 'destinations');
+                                        if ($destinations && !is_wp_error($destinations)) {
+                                            $destination_name_en = get_field('name_en', 'destinations_' . $destinations[0]->term_id);
+                                            $destination_name_jp = $destinations[0]->name; // Japanese name (default term name)
+                                        } else {
+                                            $destination_name_en = 'Japan';
+                                            $destination_name_jp = '日本';
+                                        }
+
+                                        $title_en = get_the_title();
+                                        $title_jp = get_field('title_jp');
+                                        $price = get_field('price');
+                                        $price_usd = $price['usd'];
+                                        $price_jpy = $price['jpy'];
+                                        ?>
+                                        <div class="section02-tour-title translate" 
+                                            data-name-en="<?php echo esc_attr($attraction_name_en . ' · ' . $destination_name_en); ?>" 
+                                            data-name-jp="<?php echo esc_attr($attraction_name_jp . ' · ' . $destination_name_jp); ?>">
+                                            <?php echo esc_html($attraction_name_en . ' · ' . $destination_name_en); ?>
+                                        </div>
+                                        <div class="section02-tour-content translate"
+                                            data-name-en="<?php echo esc_attr($title_en); ?>"
+                                            data-name-jp="<?php echo esc_attr($title_jp); ?>">
+                                            <?php echo esc_html($title_en); ?>
+                                        </div>
+                                        <div class="section02-tour-tag">Bestseller</div>
+                                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
+                                        <div class="section02-tour-price">
+                                            <span data-translate-key="From">From</span>
+                                            <span class="tour-currency"
+                                                data-price-usd="<?php echo esc_attr($price_usd); ?>"
+                                                data-price-jpy="<?php echo esc_attr($price_jpy); ?>">
+                                                ¥ <?php echo esc_html($price_jpy); ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            <?php endwhile;
+                        else : ?>
+                            <p><?php _e('No recently viewed tours found.'); ?></p>
+                        <?php endif;
+                        wp_reset_postdata();
+                    } else {
+                        echo '<p>' . __('No recently viewed tours found.') . '</p>';
+                    }
+                    ?>
                 </div>
             </div>
+            <div class="section02-prev">
+                <img src="<?php echo get_template_directory_uri() ?>/assets/img/Group 4.png" alt="">
+            </div>
+            <div class="section02-next">
+                <img src="<?php echo get_template_directory_uri() ?>/assets/img/Group 5.png" alt="">
+            </div>
         </div>
-        <div class="section02-prev">
-            <img src="<?php echo get_template_directory_uri() ?>/assets/img/Group 4.png" alt="">
+        <div class="more-btn">
+            <a href="<?php echo esc_url(get_post_type_archive_link('tours')); ?>" data-translate-key="See more">See more</a>
         </div>
-        <div class="section02-next">
-            <img src="<?php echo get_template_directory_uri() ?>/assets/img/Group 5.png" alt="">
-        </div>
-    </div>
-    <div class="more-btn">
-        <a href="" data-translate-key="See more">See more</a>
-    </div>
-  </section>
+  </section> 
   <section class="section08 container">
         <h2 class="section-title" data-translate-key="Popular Cities">Popular Cities</h2>
         <ul class="section08-desc">
