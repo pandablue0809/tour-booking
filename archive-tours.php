@@ -611,91 +611,98 @@ $wp_query = $query;
         </div>
     </div>
     <section class="section02 container">
-        <h2 class="section02-title" data-translate-key="Travelers' favorite choice">Travelers' favorite choice</h2>
+        <h2 class="section02-title" data-translate-key="Recently Viewed Tours">Recently Viewed Tours</h2>
         <div class="section02-slider">
             <div class="section02-slider-container">
                 <div class="section02-tours">
-				  <?php
-					// Query for the custom post type 'tours'
-					$args = array(
-						'post_type' => 'tours',
-						'posts_per_page' => 8, // Display all tours
-					);
-					$tours_query = new WP_Query($args);
-					if ($tours_query->have_posts()) : ?>
-					 <?php while ($tours_query->have_posts()) : $tours_query->the_post(); ?>
-					  <a href="<?php echo esc_url(get_permalink()); ?>" class="section02-tour">
-						<div class="section02-tour-img">
-						  <?php
-							$images = get_field('images');
-							if (!empty($images) && is_array($images)) {
-								$first_image = $images['image_01'];
-								$first_image_url = isset($first_image['url']) ? esc_url($first_image['url']) : get_template_directory_uri() . '/assets/img/noImage.png';
-							} else {
-								$first_image_url = get_template_directory_uri() . '/assets/img/noImage.png';
-							}
-							?>
-							<img src="<?php echo $first_image_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
-						</div>
-						<div class="section02-tour-desc">
-							<?php
-							// Get the first term of the 'attractions' taxonomy
-							$attractions = get_the_terms(get_the_ID(), 'attractions');
-							if ($attractions && !is_wp_error($attractions)) {
-								// Get ACF fields for English and Japanese terms
-								$attraction_name_en = get_field('name_en', 'attractions_' . $attractions[0]->term_id);
-								$attraction_name_jp = $attractions[0]->name; // Japanese name (default term name)
-							} else {
-								$attraction_name_en = 'tour';
-								$attraction_name_jp = '旅行';
-							}
+                    <?php
+                    // Get the recent tours from the cookie
+                    $recent_tours = isset($_COOKIE['recent_tours']) ? json_decode(stripslashes($_COOKIE['recent_tours']), true) : [];
+                    var_dump($recent_tours);
+                    if (!empty($recent_tours)) {
+                        // Query for the recently viewed tours based on the cookie values
+                        $args = array(
+                            'post_type' => 'tours',
+                            'post__in' => $recent_tours,  // Only include recently viewed tours
+                            'orderby' => 'post__in'  // Preserve the order from the cookie
+                        );
+                        $recent_tours_query = new WP_Query($args);
 
-							// Get the first term of the 'destinations' taxonomy
-							$destinations = get_the_terms(get_the_ID(), 'destinations');
-							if ($destinations && !is_wp_error($destinations)) {
-								// Get ACF fields for English and Japanese terms
-								$destination_name_en = get_field('name_en', 'destinations_' . $destinations[0]->term_id);
-								$destination_name_jp = $destinations[0]->name; // Japanese name (default term name)
-							} else {
-								$destination_name_en = 'Japan';
-								$destination_name_jp = '日本';
-							}
+                        if ($recent_tours_query->have_posts()) : 
+                            while ($recent_tours_query->have_posts()) : $recent_tours_query->the_post(); ?>
+                                <a href="<?php echo esc_url(get_permalink()); ?>" class="section02-tour">
+                                    <div class="section02-tour-img">
+                                        <?php
+                                        $images = get_field('images');
+                                        if (!empty($images) && is_array($images)) {
+                                            $first_image = $images['image_01'];
+                                            $first_image_url = isset($first_image['url']) ? esc_url($first_image['url']) : get_template_directory_uri() . '/assets/img/noImage.png';
+                                        } else {
+                                            $first_image_url = get_template_directory_uri() . '/assets/img/noImage.png';
+                                        }
+                                        ?>
+                                        <img src="<?php echo $first_image_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                                    </div>
+                                    <div class="section02-tour-desc">
+                                        <?php
+                                        // Get the first term of the 'attractions' taxonomy
+                                        $attractions = get_the_terms(get_the_ID(), 'attractions');
+                                        if ($attractions && !is_wp_error($attractions)) {
+                                            $attraction_name_en = get_field('name_en', 'attractions_' . $attractions[0]->term_id);
+                                            $attraction_name_jp = $attractions[0]->name; // Japanese name (default term name)
+                                        } else {
+                                            $attraction_name_en = 'Tour';
+                                            $attraction_name_jp = '旅行';
+                                        }
 
-							$title_en = get_the_title();
-							$title_jp = get_field('title_jp');
-							$price = get_field('price');
-							$price_usd = $price['usd'];
-							$price_jpy = $price['jpy'];
-						  ?>
-						  <div class="section02-tour-title translate" 
-							  data-name-en="<?php echo esc_attr($attraction_name_en . ' · ' . $destination_name_en); ?>" 
-							  data-name-jp="<?php echo esc_attr($attraction_name_jp . ' · ' . $destination_name_jp); ?>">
-							  <?php echo esc_html($attraction_name_en . ' · ' . $destination_name_en); ?>
-						  </div>
-						  <div class="section02-tour-content translate"
-							  data-name-en="<?php echo esc_attr($title_en); ?>"
-							  data-name-jp="<?php echo esc_attr($title_jp); ?>">
-							  <?php echo esc_attr($title_en); ?>
-						  </div>
-						  <div class="section02-tour-tag">Bestseller</div>
-						  <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-						  <div class="section02-tour-price">
-							  <span data-translate-key="From">From</span>
-							  <span class="tour-currency"
-								data-price-usd="<?php echo esc_attr($price_usd); ?>"
-								data-price-jpy="<?php echo esc_attr($price_jpy); ?>">
-								  ¥ <?php echo esc_html($price_jpy); ?>
-							  </span>
-						  </div>
-						</div>
-					  </a>
-					<?php endwhile; ?>
-					<?php else : ?>
-						<p><?php _e('No tours found.'); ?></p>
-					<?php endif; ?>
+                                        // Get the first term of the 'destinations' taxonomy
+                                        $destinations = get_the_terms(get_the_ID(), 'destinations');
+                                        if ($destinations && !is_wp_error($destinations)) {
+                                            $destination_name_en = get_field('name_en', 'destinations_' . $destinations[0]->term_id);
+                                            $destination_name_jp = $destinations[0]->name; // Japanese name (default term name)
+                                        } else {
+                                            $destination_name_en = 'Japan';
+                                            $destination_name_jp = '日本';
+                                        }
 
-				  <?php wp_reset_postdata(); ?>
-				</div>
+                                        $title_en = get_the_title();
+                                        $title_jp = get_field('title_jp');
+                                        $price = get_field('price');
+                                        $price_usd = $price['usd'];
+                                        $price_jpy = $price['jpy'];
+                                        ?>
+                                        <div class="section02-tour-title translate" 
+                                            data-name-en="<?php echo esc_attr($attraction_name_en . ' · ' . $destination_name_en); ?>" 
+                                            data-name-jp="<?php echo esc_attr($attraction_name_jp . ' · ' . $destination_name_jp); ?>">
+                                            <?php echo esc_html($attraction_name_en . ' · ' . $destination_name_en); ?>
+                                        </div>
+                                        <div class="section02-tour-content translate"
+                                            data-name-en="<?php echo esc_attr($title_en); ?>"
+                                            data-name-jp="<?php echo esc_attr($title_jp); ?>">
+                                            <?php echo esc_html($title_en); ?>
+                                        </div>
+                                        <div class="section02-tour-tag">Bestseller</div>
+                                        <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
+                                        <div class="section02-tour-price">
+                                            <span data-translate-key="From">From</span>
+                                            <span class="tour-currency"
+                                                data-price-usd="<?php echo esc_attr($price_usd); ?>"
+                                                data-price-jpy="<?php echo esc_attr($price_jpy); ?>">
+                                                ¥ <?php echo esc_html($price_jpy); ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            <?php endwhile;
+                        else : ?>
+                            <p><?php _e('No recently viewed tours found.'); ?></p>
+                        <?php endif;
+                        wp_reset_postdata();
+                    } else {
+                        echo '<p>' . __('No recently viewed tours found.') . '</p>';
+                    }
+                    ?>
+                </div>
             </div>
             <div class="section02-prev">
                 <img src="<?php echo get_template_directory_uri() ?>/assets/img/Group 4.png" alt="">
@@ -707,7 +714,7 @@ $wp_query = $query;
         <div class="more-btn">
             <a href="" data-translate-key="See more">See more</a>
         </div>
-    </section>
+    </section>              
     <section class="section08 container">
         <h2 class="section-title" data-translate-key="Popular Cities">Popular Cities</h2>
         <ul class="section08-desc">

@@ -89,21 +89,21 @@
             $tours_query = new WP_Query($args);
             if ($tours_query->have_posts()) : ?>
              <?php while ($tours_query->have_posts()) : $tours_query->the_post(); ?>
-              <div class="section02-tour">
+              <a href="<?php echo esc_url(get_permalink()); ?>" class="section02-tour">
                 <div class="section02-tour-img">
-                <?php
-                $images = get_field('images');
-                if (!empty($images) && is_array($images)) {
-                  $first_image = $images['image_01'];
-                  $first_image_url = isset($first_image['url']) ? esc_url($first_image['url']) : get_template_directory_uri() . '/assets/img/ezgif-7-594f91690c.png';
-                } else {
-                  $first_image_url = get_template_directory_uri() . '/assets/img/noImage.png';
-                }
-                ?>
-                <img src="<?php echo $first_image_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                  <?php
+					$images = get_field('images');
+					if (!empty($images) && is_array($images)) {
+						$first_image = $images['image_01'];
+						$first_image_url = isset($first_image['url']) ? esc_url($first_image['url']) : get_template_directory_uri() . '/assets/img/noImage.png';
+					} else {
+						$first_image_url = get_template_directory_uri() . '/assets/img/noImage.png';
+					}
+					?>
+					<img src="<?php echo $first_image_url; ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
                 </div>
                 <div class="section02-tour-desc">
-                  <?php
+					<?php
                     // Get the first term of the 'attractions' taxonomy
                     $attractions = get_the_terms(get_the_ID(), 'attractions');
                     if ($attractions && !is_wp_error($attractions)) {
@@ -111,8 +111,8 @@
                         $attraction_name_en = get_field('name_en', 'attractions_' . $attractions[0]->term_id);
                         $attraction_name_jp = $attractions[0]->name; // Japanese name (default term name)
                     } else {
-                        $attraction_name_en = '';
-                        $attraction_name_jp = '';
+                        $attraction_name_en = 'tour';
+                        $attraction_name_jp = '旅行';
                     }
 
                     // Get the first term of the 'destinations' taxonomy
@@ -122,24 +122,38 @@
                         $destination_name_en = get_field('name_en', 'destinations_' . $destinations[0]->term_id);
                         $destination_name_jp = $destinations[0]->name; // Japanese name (default term name)
                     } else {
-                        $destination_name_en = '';
-                        $destination_name_jp = '';
+                        $destination_name_en = 'Japan';
+                        $destination_name_jp = '日本';
                     }
 
                     $title_en = get_the_title();
                     $title_jp = get_field('title_jp');
+					$price = get_field('price');
+					$price_usd = $price['usd'];
+					$price_jpy = $price['jpy'];
                   ?>
                   <div class="section02-tour-title translate" 
                       data-name-en="<?php echo esc_attr($attraction_name_en . ' · ' . $destination_name_en); ?>" 
                       data-name-jp="<?php echo esc_attr($attraction_name_jp . ' · ' . $destination_name_jp); ?>">
-                      <?php echo esc_html($attraction_name_jp . ' · ' . $destination_name_jp); ?>
+                      <?php echo esc_html($attraction_name_en . ' · ' . $destination_name_en); ?>
                   </div>
-                  <div class="section02-tour-content">Item-main-title item-main Japan Item-main-title item-main Japan</div>
+                  <div class="section02-tour-content translate"
+					  data-name-en="<?php echo esc_attr($title_en); ?>"
+					  data-name-jp="<?php echo esc_attr($title_jp); ?>">
+					  <?php echo esc_attr($title_en); ?>
+				  </div>
                   <div class="section02-tour-tag">Bestseller</div>
                   <div class="section02-tour-review"><span class="section02-star">★ 4.6</span> (6,000) • 100K+ booked</div>
-                  <div class="section02-tour-price">From  ¥ 5,958</div>
+                  <div class="section02-tour-price">
+					  <span data-translate-key="From">From</span>
+					  <span class="tour-currency"
+						data-price-usd="<?php echo esc_attr($price_usd); ?>"
+                    	data-price-jpy="<?php echo esc_attr($price_jpy); ?>">
+						  ¥ <?php echo esc_html($price_jpy); ?>
+					  </span>
+				  </div>
                 </div>
-              </div>
+              </a>
             <?php endwhile; ?>
             <?php else : ?>
                 <p><?php _e('No tours found.'); ?></p>
@@ -246,6 +260,7 @@
             'taxonomy' => 'destinations',
             'hide_empty' => false,
             'number' => 10, 
+			'parent' => 0,
         );
 
         $terms = get_terms($args);
@@ -391,6 +406,7 @@
             'taxonomy' => 'destinations',
             'hide_empty' => false,
             'number' => 30, 
+			'parent' => 0,
         );
 
         $terms = get_terms($args);

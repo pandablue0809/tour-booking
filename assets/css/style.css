@@ -1876,9 +1876,16 @@ input[type="range"]::-webkit-slider-thumb {
 .include-list-02 li {
   display: flex;
   gap: 20px;
-  align-items: center;
   font-size: 16px;
   color: #212121;
+}
+
+.include-list-02 li svg {
+  width: 15px;
+}
+
+.include-list-02 li span {
+  width: calc(100% - 35px);
 }
 
 .tour-detail-pickUp-meeting {

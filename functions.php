@@ -526,6 +526,30 @@ function enqueue_setting_scripts() {
 
 add_action('wp_ajax_change_password', 'handle_ajax_change_password');
 
+function track_recently_viewed_tours() {
+    // Check if it's a single tour page
+    if (is_singular('tours')) {
+        $current_tour_id = get_the_ID(); // Get the current tour ID
+
+        // Get the existing recent tours from the cookie
+        $recent_tours = isset($_COOKIE['recent_tours']) ? json_decode(stripslashes($_COOKIE['recent_tours']), true) : [];
+
+        // If the current tour is not in the array, add it
+        if (!in_array($current_tour_id, $recent_tours)) {
+            // Limit to 5 recent tours
+            if (count($recent_tours) >= 8) {
+                array_shift($recent_tours); // Remove the oldest one
+            }
+            $recent_tours[] = $current_tour_id; // Add the current tour
+        }
+
+        // Save the updated array in a cookie (for 30 days)
+        setcookie('recent_tours', json_encode($recent_tours), time() + (86400 * 30), COOKIEPATH, COOKIE_DOMAIN, false, true);
+    }
+}
+add_action('wp', 'track_recently_viewed_tours');
+
+
 ?>
 
 

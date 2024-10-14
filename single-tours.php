@@ -93,7 +93,7 @@
     }
     $possible_number_of_bookings = get_field('possible_number_of_bookings');
     $min_number = $possible_number_of_bookings['min_number'];
-    $max_number = $possible_number_of_bookings['max_number'];
+    $max_number = !empty($possible_number_of_bookings['max_number']) ? $possible_number_of_bookings['max_number'] :  $min_number;
     $participating_age = get_field('participating_age');
     $min_age = $participating_age['min_age'];
     $max_age = $participating_age['max_age'];
@@ -101,6 +101,42 @@
     $min_time = $experience_time['min_time'];
     $max_time = $experience_time['max_time'];
     $experience_time_option = $experience_time['option'];
+    $free_cancellation = get_field('free_cancellation');
+    $overView_jp = get_field('content_jp');
+    $overView_en = get_the_content();
+    $included_jp = get_field('included_jp');
+    $unincluded_jp = get_field('unincluded_jp');
+    $included_en = get_field('included_en');
+    $unincluded_en = get_field('unincluded_en');
+    $pickup_points = get_field('pickup_points');
+    $pickup_points_address_jp = $pickup_points['pickup_points_address_jp'];
+    $pickup_points_address_en = $pickup_points['pickup_points_address_en'];
+    $pickup_points_google_map = $pickup_points['google_map'];
+    $pickup_details_jp = $pickup_points['pickup_details_jp'];
+    $pickup_details_en = $pickup_points['pickup_details_en'];
+    $meeting_point = get_field('meeting_point');
+    $meeting_point_address_jp = $meeting_point['meeting_point_address_jp'];
+    $meeting_point_address_en = $meeting_point['meeting_point_address_en'];
+    $meeting_point_google_map = $meeting_point['google_map'];
+    $meeting_detail_jp = $meeting_point['meeting_detail_jp'];
+    $meeting_detail_en = $meeting_point['meeting_detail_en'];
+    $end_point = get_field('end_point');
+    $end_point_address_en = $end_point['end_point_address_en'];
+    $end_point_address_jp = $end_point['end_point_address_jp'];
+    $end_point_google_map = $end_point['google_map'];
+    $end_point_description_en = $end_point['end_point_description_en'];
+    $end_point_description_jp = $end_point['end_point_description_jp'];
+    $additional_info_jp = get_field('additional_info_jp');
+    $additional_info_en = get_field('additional_info_en');
+    $other_description_jp = get_field('other_description_jp');
+    $other_description_en = get_field('other_description_en');
+    $price = get_field('price');
+    $price_usd = $price['usd'];
+    $price_jpy = $price['jpy'];
+    $social = get_field('social');
+    $facebook_link = $social['facebook'];
+    $twitter_link = $social['twitter'];
+    $instagram_link = $social['instagram']
     ?>
     <h2 class="translate" data-name-en="<?php echo esc_attr($title_en); ?>" data-name-jp="<?php echo esc_attr($title_jp); ?>"><?php echo esc_attr($title_en); ?></h2>
     <div class="tour-detail-head-star">
@@ -194,6 +230,9 @@
         </div>
       </div>
       <div class="tour-detail-main-content-categorys">
+        <?php 
+        if($free_cancellation === true) 
+        echo '
         <div class="tour-detail-main-content-category">
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
@@ -207,9 +246,11 @@
               </g>
             </svg>
           </span>
-          <span>Free Cancellation</span>
-        </div>
-        <div class="tour-detail-main-content-category">
+          <span data-translate-key="Free Cancellation">Free Cancellation</span>
+        </div>     
+        ';
+        ?>
+        <!-- <div class="tour-detail-main-content-category">
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
               <g id="Group_17" data-name="Group 17" transform="translate(-748 -696)">
@@ -223,20 +264,12 @@
             </svg>
           </span>
           <span>Specials category name list here</span>
-        </div>
+        </div> -->
       </div>
       <div class="tour-detail-overview">
         <h2 class="tour-detail-overview-title" data-translate-key="Overview">Overview</h2>
-        <div class="tour-detail-overview-desc">
-        Dive into the unique and inventive fashion and style cultures of Tokyo. This private tour introduces you to the street styles of the city's youthful Harajuku and Shibuya districts, as well as the upscale shopping districts of Omotesando and Aoyama. You'll also have the chance to sample typical street foods, such as crepes, cotton candy, and shaved ice.
-        <br><br>
-        •  Explore Tokyo's thrilling style scene on a guided tour
-        <br>
-        •  Private tour, exclusively for your party: A personalized experience
-        <br>
-        •  Hassle-free pickup from your Tokyo hotel
-        <br>
-        •  Learn all about Tokyo style and culture from your guide
+        <div class="tour-detail-overview-desc translate" data-name-en="<?php echo esc_attr($overView_en); ?>" data-name-jp="<?php echo esc_attr($overView_jp); ?>">
+          <?php echo esc_html($overView_en); ?>
         </div>
       </div>
       <div class="tour-detail-section">
@@ -255,62 +288,38 @@
           <div class="tour-detail-section-desc show">
             <div class="include-list">
               <div class="include-list-01">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16.255" height="11.404" viewBox="0 0 16.255 11.404">
-                    <g id="Group_75" data-name="Group 75" transform="translate(-262.188 -1371.146)">
-                      <line id="Line_160" data-name="Line 160" x2="5.33" y2="4.264" transform="translate(262.5 1377.896)" fill="none" stroke="#212121" stroke-width="1"/>
-                      <line id="Line_161" data-name="Line 161" x1="10.661" y2="10.661" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                    </g>
-                  </svg>
-                  <span>include list 1</span>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16.255" height="11.404" viewBox="0 0 16.255 11.404">
-                    <g id="Group_75" data-name="Group 75" transform="translate(-262.188 -1371.146)">
-                      <line id="Line_160" data-name="Line 160" x2="5.33" y2="4.264" transform="translate(262.5 1377.896)" fill="none" stroke="#212121" stroke-width="1"/>
-                      <line id="Line_161" data-name="Line 161" x1="10.661" y2="10.661" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                    </g>
-                  </svg>
-                  <span>include list 2</span>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16.255" height="11.404" viewBox="0 0 16.255 11.404">
-                    <g id="Group_75" data-name="Group 75" transform="translate(-262.188 -1371.146)">
-                      <line id="Line_160" data-name="Line 160" x2="5.33" y2="4.264" transform="translate(262.5 1377.896)" fill="none" stroke="#212121" stroke-width="1"/>
-                      <line id="Line_161" data-name="Line 161" x1="10.661" y2="10.661" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                    </g>
-                  </svg>
-                  <span>include list 3</span>
-                </li>
+                <?php if ($included_jp && $included_en): ?>
+                  <?php foreach ($included_jp as $key => $included_jp_item): ?>
+                    <?php if (!empty($included_jp_item) && !empty($included_en[$key])): // Ensure both JP and EN are not empty ?>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16.255" height="11.404" viewBox="0 0 16.255 11.404">
+                                <g id="Group_75" data-name="Group 75" transform="translate(-262.188 -1371.146)">
+                                    <line id="Line_160" data-name="Line_160" x2="5.33" y2="4.264" transform="translate(262.5 1377.896)" fill="none" stroke="#212121" stroke-width="1"/>
+                                    <line id="Line_161" data-name="Line_161" x1="10.661" y2="10.661" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
+                                </g>
+                            </svg>
+                            <span class="translate" data-name-en="<?php echo esc_attr($included_en[$key]); ?>" data-name-jp="<?php echo esc_attr($included_jp_item); ?>"><?php echo esc_html($included_en[$key]); ?></span>
+                        </li>
+                    <?php endif; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </div>
               <div class="include-list-02">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12.527" height="12.939" viewBox="0 0 12.527 12.939">
-                    <g id="Group_78" data-name="Group 78" transform="translate(-267.075 -1371.146)">
-                      <line id="Line_160" data-name="Line 160" x2="11.642" y2="12.241" transform="translate(267.508 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                      <line id="Line_161" data-name="Line 161" x1="11.82" y2="11.82" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                    </g>
-                  </svg>
-                  <span>unincluded list 1</span>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12.527" height="12.939" viewBox="0 0 12.527 12.939">
-                    <g id="Group_78" data-name="Group 78" transform="translate(-267.075 -1371.146)">
-                      <line id="Line_160" data-name="Line 160" x2="11.642" y2="12.241" transform="translate(267.508 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                      <line id="Line_161" data-name="Line 161" x1="11.82" y2="11.82" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                    </g>
-                  </svg>
-                  <span>unincluded list 1</span>
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12.527" height="12.939" viewBox="0 0 12.527 12.939">
-                    <g id="Group_78" data-name="Group 78" transform="translate(-267.075 -1371.146)">
-                      <line id="Line_160" data-name="Line 160" x2="11.642" y2="12.241" transform="translate(267.508 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                      <line id="Line_161" data-name="Line 161" x1="11.82" y2="11.82" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
-                    </g>
-                  </svg>
-                  <span>unincluded list 1</span>
-                </li>
+                <?php if ($unincluded_jp && $unincluded_en): ?>
+                  <?php foreach ($unincluded_jp as $key => $unincluded_jp_item): ?>
+                      <?php if (!empty($unincluded_jp_item) && !empty($unincluded_en[$key])): // Ensure both JP and EN are not empty ?>
+                          <li>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12.527" height="12.939" viewBox="0 0 12.527 12.939">
+                                  <g id="Group_78" data-name="Group 78" transform="translate(-267.075 -1371.146)">
+                                      <line id="Line_160" data-name="Line_160" x2="11.642" y2="12.241" transform="translate(267.508 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
+                                      <line id="Line_161" data-name="Line_161" x1="11.82" y2="11.82" transform="translate(267.429 1371.5)" fill="none" stroke="#212121" stroke-width="1"/>
+                                  </g>
+                              </svg>
+                              <span class="translate" data-name-en="<?php echo esc_attr($unincluded_en[$key]); ?>" data-name-jp="<?php echo esc_attr($unincluded_jp_item); ?>"><?php echo esc_html($unincluded_en[$key]); ?></span>
+                          </li>
+                      <?php endif; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -342,14 +351,11 @@
                   <span data-translate-key="Pickup points">Pickup points</span>
                 </div>
                 <div class="tour-detail-point-desc">
-                  <p>
-                    <p>Haneda Airport</p>
-                    <p>
-                    3-3-2 Hanedakuko, Ota 144-0041 Tokyo Prefecture
-                    </p>
+                  <p class="translate" data-name-en="<?php echo esc_attr($pickup_points_address_en); ?>" data-name-jp="<?php echo esc_attr($pickup_points_address_jp); ?>">
+                    <?php echo esc_attr($pickup_points_address_en); ?>
                   </p>
                   <div class="tour-detail-point-desc-googlemap">
-                    <a href="">
+                    <a href="<?php echo esc_attr($pickup_points_google_map); ?>" target="_blank">
                       <span data-translate-key="Open in Google Maps">Open in Google Maps</span>
                       <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="7.748" height="13.76" viewBox="0 0 7.748 13.76">
@@ -363,8 +369,9 @@
                   </div>
                   <div class="tour-detail-point-pickup-detail">
                     <h2 data-translate-key="Pickup details">Pickup details</h2>
-                    <p>Our driver guide will wait for you in the arrivals hall, outside of custom with a welcome sign with 
-                    your name</p>
+                    <p class="translate" data-name-en="<?php echo esc_attr($pickup_details_en); ?>" data-name-jp="<?php echo esc_attr($pickup_details_jp); ?>">
+                      <?php echo esc_attr($pickup_details_en); ?>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -383,14 +390,11 @@
                   <span data-translate-key="Meeting point">Meeting point</span>
                 </div>
                 <div class="tour-detail-point-desc">
-                  <p>
-                    <p>Haneda Airport</p>
-                    <p>
-                    3-3-2 Hanedakuko, Ota 144-0041 Tokyo Prefecture
-                    </p>
+                  <p class="translate" data-name-en="<?php echo esc_attr($meeting_point_address_en); ?>" data-name-jp="<?php echo esc_attr($meeting_point_address_jp); ?>">
+                    <?php echo esc_attr($meeting_point_address_en); ?>
                   </p>
                   <div class="tour-detail-point-desc-googlemap">
-                    <a href="">
+                    <a href=" <?php echo esc_attr($meeting_point_google_map); ?>" target="_blank">
                       <span data-translate-key="Open in Google Maps">Open in Google Maps</span>
                       <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="7.748" height="13.76" viewBox="0 0 7.748 13.76">
@@ -404,7 +408,9 @@
                   </div>
                   <div class="tour-detail-point-pickup-detail">
                     <h2 data-translate-key="Pickup details">Pickup details</h2>
-                    <p>This is just sample information. We will meet at a hotel lobby basically.</p>
+                    <p class="translate" data-name-en="<?php echo esc_attr($meeting_detail_en); ?>" data-name-jp="<?php echo esc_attr($meeting_detail_jp); ?>">
+                      <?php echo esc_attr($meeting_detail_en); ?>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -423,9 +429,40 @@
                   <span data-translate-key="End point">End point</span>
                 </div>
                 <div class="tour-detail-point-desc">
-                  <p>
-                  This activity ends back at the meeting point.
-                  </p>
+                  <?php 
+                    if($end_point_address_en && $end_point_address_jp) {
+                        echo '
+                        <p class="translate" data-name-en="' . esc_attr($end_point_address_en) . '" data-name-jp="' . esc_attr($end_point_address_jp) . '">
+                            ' . esc_html($end_point_address_en) . '
+                        </p>';
+                    }
+                  ?>
+                  <?php 
+                  if($end_point_google_map) {
+                      echo '
+                      <div class="tour-detail-point-desc-googlemap">
+                          <a href="' . esc_url($end_point_google_map) . '" target="_blank">
+                              <span data-translate-key="Open in Google Maps">Open in Google Maps</span>
+                              <span>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="7.748" height="13.76" viewBox="0 0 7.748 13.76">
+                                      <g id="Group_23" data-name="Group 23" transform="translate(0.354 1.203)">
+                                          <line id="Line_155" data-name="Line 155" y1="6.605" x2="6.605" transform="translate(0 5.599)" fill="none" stroke="#212121" stroke-width="1"/>
+                                          <line id="Line_156" data-name="Line 156" x1="6.351" y1="6.351" transform="translate(0.69 -0.849)" fill="none" stroke="#212121" stroke-width="1"/>
+                                      </g>
+                                  </svg>  
+                              </span>
+                          </a>
+                      </div>';
+                  }
+                  ?>
+                  <?php if ($end_point_description_en && $end_point_description_jp): ?>
+                      <div class="tour-detail-point-pickup-detail">
+                          <h2 data-translate-key="Pickup details">Pickup details</h2>
+                          <p class="translate" data-name-en="<?php echo esc_attr($end_point_description_en); ?>" data-name-jp="<?php echo esc_attr($end_point_description_jp); ?>">
+                              <?php echo esc_html($end_point_description_en); ?>
+                          </p>
+                      </div>
+                  <?php endif; ?>
                 </div>
               </div>
               <div class="tour-detail-point">
@@ -465,11 +502,8 @@
               </svg>
             </span>
           </div>
-          <div class="tour-detail-section-desc show">
-            <p>•   Confirmation will be received within 48 hours of booking, subject to availability</p>
-            <p>•   Confirmation will be received within 48 hours of booking, subject to availability</p>
-            <p>•   Confirmation will be received within 48 hours of booking, subject to availability</p>
-            <p>•   Confirmation will be received within 48 hours of booking, subject to availability</p>
+          <div class="tour-detail-section-desc show translate"  data-name-en="<?php echo esc_attr($additional_info_en); ?>" data-name-jp="<?php echo esc_attr($additional_info_jp); ?>">
+            <?php echo esc_html($additional_info_en); ?>
           </div>
         </div>
       </div>
@@ -490,10 +524,10 @@
             <table class="tour-detail-payment-desc">
               <tbody>
                 <tr>
-                  <td>Payment methods</td>
+                  <td data-translate-key="Payment methods">Payment methods</td>
                   <td>
                     <p>
-                      <span>Online payment</span>
+                      <span data-translate-key="Online payment">Online payment</span>
                       <span>
                         <img src="<?php echo get_template_directory_uri() ?>/assets/img/payments_thumb_202303.png" alt="">
                       </span>
@@ -501,20 +535,20 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Display of the Specified Commercial Transactions Act</td>
-                  <td><a href="">Display of the Specified Commercial Transactions Act link</a></td>
+                  <td data-translate-key="Display of the Specified">Display of the Specified Commercial Transactions Act</td>
+                  <td><a href="" data-translate-key="Display of the Specified Commercial">Display of the Specified Commercial Transactions Act link</a></td>
                 </tr>
                 <tr>
-                  <td>Reservation cancellation fee generation date	</td>
-                  <td>Cancellation fee will be charged from 1 days before the event date.</td>
+                  <td data-translate-key="Reservation cancellation fee generation date">Reservation cancellation fee generation date	</td>
+                  <td data-translate-key="Cancellation fee will be charged from 1 days before the event date.">Cancellation fee will be charged from 1 days before the event date.</td>
                 </tr>
                 <tr>
-                  <td>About cancellation</td>
-                  <td>If you cancel or change your reservation after 4:00pm the day before, you will be charged a 100% cancellation fee. If you cancel for personal reasons, oversleep, or are late, you will be charged the regular cancellation fee. If you are 30 minutes late from the meeting time, you will be subject to a cancellation fee.</td>
+                  <td data-translate-key="About cancellation">About cancellation</td>
+                  <td data-translate-key="If you cancel or change your reservation after 4:00pm the day before">If you cancel or change your reservation after 4:00pm the day before, you will be charged a 100% cancellation fee. If you cancel for personal reasons, oversleep, or are late, you will be charged the regular cancellation fee. If you are 30 minutes late from the meeting time, you will be subject to a cancellation fee.</td>
                 </tr>
                 <tr>
-                  <td>About event termination</td>
-                  <td>*On the day Depending on the ocean conditions, there may be 
+                  <td data-translate-key="About event termination">About event termination</td>
+                  <td data-translate-key="*On the day Depending">*On the day Depending on the ocean conditions, there may be 
                   changes and cancellations of the start time and program content. 
                   Please acknowledge it beforehand.
                   * Please be assured that it will not be affected by the weather 
@@ -538,13 +572,8 @@
               </svg>
             </span>
           </div>
-          <div class="tour-detail-section-desc show">
-            <p>•   Facility information</p>
-            <p>•   About advance preparations</p>
-            <p>•   Matters require attention	</p>
-            <p>•   Other notifications 	</p>
-            <p>•   etc 	</p>
-            <p>Enter any other required information here so that users can see it.</p>
+          <div class="tour-detail-section-desc show translate"  data-name-en="<?php echo esc_attr($other_description_en); ?>" data-name-jp="<?php echo esc_attr($other_description_jp); ?>">
+            <?php echo esc_html($other_description_en); ?>
           </div>
         </div>
       </div>
@@ -650,7 +679,8 @@
     <div class="tour-detail-book-sidebar">
       <div class="tour-detail-book-container">
         <div class="tour-detail-book-price">
-          <span>¥66,472.00</span>
+          <span class="tour-currency"data-price-usd="<?php echo esc_attr($price_usd); ?>"
+          data-price-jpy="<?php echo esc_attr($price_jpy); ?>">¥ <?php echo esc_html($price_jpy); ?></span>
         </div>
         <div class="tour-detail-book-datepicker">
           <div class="datepicker">
@@ -659,7 +689,7 @@
           </div>
           <div class="selete-member">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/1077114.png" alt="">
-            <input type="number" name="" id="" min="1" max="9" value="2">          
+            <input type="number" name="" id="" min="1" max="<?php echo esc_attr($max_number)?>" value="2">          
           </div>          
         </div>
         <div class="tour-detail-book-selete-time">
@@ -684,13 +714,13 @@
         </div>
         <div class="tour-detail-social-button">
           <span data-translate-key="Share">Share</span>
-          <a href="">
+          <a href="<?php echo esc_url($facebook_link)?>">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/social-media-logos-set_1.png" alt="">
           </a>
-          <a href="">
+          <a href="<?php echo esc_url($twitter_link)?>">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/social-media-logos-set_69286.png" alt="">
           </a>
-          <a href="">
+          <a href="<?php echo esc_url($instagram_link)?>">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/social-media-logos-set_69286-518.png" alt="">
           </a>
         </div>
@@ -812,209 +842,69 @@
     </div>
   </section>
   <section class="section08 container">
-    <h2 class="section-title" data-translate-key="Popular Cities">Popular Cities</h2>
-    <ul class="section08-desc">
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-    </ul>
+        <h2 class="section-title" data-translate-key="Popular Cities">Popular Cities</h2>
+        <ul class="section08-desc">
+        <?php
+            $args = array(
+                'taxonomy' => 'destinations',
+                'hide_empty' => false,
+                'number' => 30, 
+				'parent' => 0,
+            );
+
+            $terms = get_terms($args);
+
+            $terms = array_filter($terms, function($term) {
+                return $term->slug !== 'uncategorized';
+            });
+
+            if (!empty($terms) && !is_wp_error($terms)) {
+                foreach ($terms as $term) {
+                    $name_en = get_field('name_en', 'destinations_' . $term->term_id); 
+                    $name_jp = $term->name;
+                    ?>
+                    <li class="section08-city">
+                    <a href="<?php echo esc_url(get_term_link($term)); ?>" class="translate" data-name-en="Things to do in <?php echo esc_attr($name_en); ?>" data-name-jp="<?php echo esc_attr($name_jp); ?>でやるべきこと" ></a>
+                    </li>
+                    <?php
+                }
+            } else {
+                echo '<p>No destinations found.</p>';
+            }
+        ?>
+        </ul>
   </section>
   <section class="section09 container">
-    <h2 class="section-title" data-translate-key="Popular Attractions">Popular Attractions</h2>
-    <ul class="section08-desc">
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-    </ul>
+        <h2 class="section-title" data-translate-key="Popular Attractions">Popular Attractions</h2>
+        <ul class="section08-desc">
+            <?php
+            $args = array(
+                'taxonomy' => 'attractions',
+                'hide_empty' => false,
+                'number' => 30, 
+            );
+
+            $terms = get_terms($args);
+
+            $terms = array_filter($terms, function($term) {
+                return $term->slug !== 'uncategorized';
+            });
+
+            if (!empty($terms) && !is_wp_error($terms)) {
+                foreach ($terms as $term) {
+                    $name_en = get_field('name_en', 'attractions_' . $term->term_id); 
+                    $name_jp = $term->name;
+                    ?>
+                    <li class="section08-city">
+                        <a href="<?php echo esc_url(get_term_link($term)); ?>" class="translate" data-name-en="<?php echo esc_attr($name_en); ?>" data-name-jp="<?php echo esc_attr($name_jp); ?>" ></a>
+                    </li>
+                    <?php
+                }
+            } else {
+                echo '<p>No attractions found.</p>';
+            }
+            ?>
+        </ul>
   </section>
 </main>
 
