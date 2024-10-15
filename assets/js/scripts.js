@@ -470,3 +470,26 @@ jQuery(document).ready(function($) {
     });
 });
 
+jQuery(document).ready(function($) {
+    $('#book-now-btn').on('click', function(e) {
+        e.preventDefault();
+
+        var date = $('#tour_datepicker').val();
+        var members = $('#number_of_members').val();
+        var time = $('#tour_time').val();
+        var post_id = $('input[name="post_id"]').val();
+
+        // Check if date is selected
+        if (date === '') {
+            alert("Please select a date.");
+            return;
+        }
+
+        // Redirect to checkout page with query parameters
+        var checkoutUrl = window.location.origin + "/checkout";
+        window.location.href = checkoutUrl + "?date=" + encodeURIComponent(date) + 
+                              "&members=" + encodeURIComponent(members) + 
+                              "&time=" + encodeURIComponent(time) + 
+                              "&post_id=" + encodeURIComponent(post_id);
+    });
+});

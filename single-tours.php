@@ -665,22 +665,23 @@
     </div>
     <div class="tour-detail-book-sidebar">
       <div class="tour-detail-book-container">
+        <input type="hidden" name="post_id" value="<?php echo esc_attr(get_the_ID()); ?>"/>
         <div class="tour-detail-book-price">
-          <span class="tour-currency"data-price-usd="<?php echo esc_attr($price_usd); ?>"
+          <span class="tour-currency" id="tour-price"data-price-usd="<?php echo esc_attr($price_usd); ?>"
           data-price-jpy="<?php echo esc_attr($price_jpy); ?>">¥ <?php echo esc_html($price_jpy); ?></span>
         </div>
         <div class="tour-detail-book-datepicker">
           <div class="datepicker">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/16390596.png" alt="">
-            <input type="text" name="datepicker" class="datepicker-input"/>
+            <input type="text" name="datepicker" class="datepicker-input" id="tour_datepicker"/>
           </div>
           <div class="selete-member">
             <img src="<?php echo get_template_directory_uri() ?>/assets/img/1077114.png" alt="">
-            <input type="number" name="" id="" min="<?php echo esc_attr($min_number)?>" max="<?php echo esc_attr($max_number)?>" value="2">          
+            <input type="number" name="number_of_members" id="number_of_members" min="<?php echo esc_attr($min_number)?>" max="<?php echo esc_attr($max_number)?>" value="2">          
           </div>          
         </div>
         <div class="tour-detail-book-selete-time">
-          <select name="" id="">
+          <select name="tour_time" id="tour_time">
             <option value="9:00 AM">9:00 AM</option>
             <option value="10:00 AM">10:00 AM</option>
             <option value="11:00 AM">11:00 AM</option>
@@ -688,7 +689,7 @@
           </select>
         </div>
         <div class="tour-detail-book-button">
-          <a href="<?php get_home_url() ?>/checkout" data-translate-key="BOOK NOW">BOOK NOW</a>
+          <a href="#" id="book-now-btn" data-translate-key="BOOK NOW">BOOK NOW</a>
         </div>
         <div class="tour-detail-add-favourite-button">
           <span>
