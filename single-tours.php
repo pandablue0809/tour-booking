@@ -667,7 +667,7 @@
       <div class="tour-detail-book-container">
         <input type="hidden" name="post_id" value="<?php echo esc_attr(get_the_ID()); ?>"/>
         <div class="tour-detail-book-price">
-          <span class="tour-currency" id="tour-price"data-price-usd="<?php echo esc_attr($price_usd); ?>"
+          <span class="tour-currency" id="tour-price" data-price-usd="<?php echo esc_attr($price_usd); ?>"
           data-price-jpy="<?php echo esc_attr($price_jpy); ?>">¥ <?php echo esc_html($price_jpy); ?></span>
         </div>
         <div class="tour-detail-book-datepicker">
