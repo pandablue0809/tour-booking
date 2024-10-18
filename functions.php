@@ -778,4 +778,99 @@ function populate_booking_columns($column, $post_id) {
     }
 }
 add_action('manage_booking_posts_custom_column', 'populate_booking_columns', 10, 2);
+
+function enqueue_custom_scripts() {
+    wp_enqueue_script( 'custom-search', get_template_directory_uri() . '/assets/js/search.js', array('jquery'), null, true );
+
+    // Localize the script with the `admin-ajax.php` URL
+    wp_localize_script( 'custom-search', 'ajax_object', array( 
+        'ajax_url' => admin_url( 'admin-ajax.php' ) 
+    ));
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_custom_scripts' );
+
+
+function ajax_search() {
+    $query = sanitize_text_field($_GET['s']);
+
+    // Simple check to determine if the query is Japanese or English
+    $is_japanese = preg_match('/[\p{Han}\p{Hiragana}\p{Katakana}]/u', $query);
+
+    // Search posts in 'tours' custom post type
+    $args = array(
+        'post_type' => 'tours',
+        'posts_per_page' => 5,
+        's' => $is_japanese ? '' : $query,  // Use 's' only for English searches
+        'meta_query' => array(
+            'relation' => 'OR',
+            array(
+                'key' => 'title_jp',  // Search Japanese title if the query is Japanese
+                'value' => $is_japanese ? $query : '',
+                'compare' => 'LIKE',
+            ),
+        ),
+    );
+    
+    $search_query = new WP_Query($args);
+
+    // Taxonomy search for 'destinations', 'attractions', and 'activities'
+    $taxonomies = array('destinations', 'attractions', 'activities');
+    $tax_results = array();
+    
+    foreach ($taxonomies as $taxonomy) {
+        // Search by 'name' if it's a Japanese query, or 'name_en' if it's an English query
+        $terms = get_terms(array(
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false,
+            $is_japanese ? 'name__like' : 'meta_query' => $is_japanese ? $query : array(
+                array(
+                    'key' => 'name_en',    // Custom meta field for English name
+                    'value' => $query,
+                    'compare' => 'LIKE',
+                ),
+            ),
+            'number' => 5,  // Limit to 5 terms
+        ));
+        
+        if (!is_wp_error($terms) && !empty($terms)) {
+            $tax_results = array_merge($tax_results, $terms); // Collect all terms
+        }
+    }
+
+    // Output results: first taxonomy terms, then tour posts
+    $total_results = 0;
+
+    // Show taxonomy results first
+    foreach ($tax_results as $term) {
+        $name_en = get_term_meta($term->term_id, 'name_en', true);  // English name from meta field
+        echo '<li><a href="' . get_term_link($term) . '" class="translate" data-name-en="' . esc_attr($name_en) . '" data-name-jp="' . esc_attr($term->name) . '">' . esc_html($name_en ?: $term->name) . '</a></li>';
+        $total_results++;
+    }
+
+    // Show posts if taxonomy results are less than 5
+    if ($total_results < 5 && $search_query->have_posts()) {
+        while ($search_query->have_posts()) {
+            $search_query->the_post();
+            $title = get_the_title();
+            $title_jp = get_post_meta(get_the_ID(), 'title_jp', true);
+            
+            echo '<li><a href="' . get_permalink() . '" class="translate" data-name-en="' . esc_attr($title) . '" data-name-jp="' . esc_attr($title_jp) . '">' . esc_html($title) . '</a></li>';
+            $total_results++;
+            if ($total_results >= 5) {
+                break;  // Stop once we have 5 total results
+            }
+        }
+    }
+
+    if ($total_results === 0) {
+        echo '<li>No results found</li>';
+    }
+
+    wp_reset_postdata();
+    die(); // Terminate the script to avoid sending a 0 response
+}
+
+add_action('wp_ajax_nopriv_ajax_search', 'ajax_search');
+add_action('wp_ajax_ajax_search', 'ajax_search');
+
 ?>
