@@ -665,14 +665,14 @@
     </div>
     <div class="tour-detail-book-sidebar">
       <div class="tour-detail-book-container">
-        <input type="hidden" name="post_id" value="<?php echo esc_attr(get_the_ID()); ?>"/>
+		<input type="hidden" name="post_id" value="<?php echo esc_attr(get_the_ID()); ?>"/>
         <div class="tour-detail-book-price">
-          <span class="tour-currency" id="tour-price" data-price-usd="<?php echo esc_attr($price_usd); ?>"
+          <span class="tour-currency" id="tour-pirce" data-price-usd="<?php echo esc_attr($price_usd); ?>"
           data-price-jpy="<?php echo esc_attr($price_jpy); ?>">¥ <?php echo esc_html($price_jpy); ?></span>
         </div>
         <div class="tour-detail-book-datepicker">
           <div class="datepicker">
-            <img src="<?php echo get_template_directory_uri() ?>/assets/img/16390596.png" alt="">
+            <img src="<?php echo get_template_directory_uri() ?>/assets/img/16390596.png" alt="">			  
             <input type="text" name="datepicker" class="datepicker-input" id="tour_datepicker"/>
           </div>
           <div class="selete-member">
