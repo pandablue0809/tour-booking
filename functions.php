@@ -1,13 +1,4 @@
 <?php 
-function tour_booking_setup() {
-    // Enable post thumbnails
-    add_theme_support('post-thumbnails');
-    // Register menus
-    register_nav_menus(array(
-        'primary' => __('Primary Menu', 'tour-booking-theme'),
-    ));
-}
-add_action('after_setup_theme', 'tour_booking_setup');
 
 // Enqueue theme styles and scripts
 function tour_booking_enqueue_scripts() {
@@ -23,6 +14,43 @@ function disable_admin_bar_for_non_admins() {
     }
 }
 add_action('after_setup_theme', 'disable_admin_bar_for_non_admins');
+
+function cptui_register_my_taxes_destinations() {
+
+	/**
+	 * Taxonomy: destinations.
+	 */
+
+	$labels = [
+		"name" => esc_html__( "destinations", "tour-booking" ),
+		"singular_name" => esc_html__( "destinations", "tour-booking" ),
+	];
+
+	
+	$args = [
+		"label" => esc_html__( "destinations", "tour-booking" ),
+		"labels" => $labels,
+		"public" => true,
+		"publicly_queryable" => true,
+		"hierarchical" => true,
+		"show_ui" => true,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"query_var" => true,
+		"rewrite" => [ 'slug' => 'destinations', 'with_front' => true, 'hierarchical' => true,],
+		"show_admin_column" => true,
+		"show_in_rest" => true,
+		"show_tagcloud" => false,
+		"rest_base" => "destinations",
+		"rest_controller_class" => "WP_REST_Terms_Controller",
+		"rest_namespace" => "wp/v2",
+		"show_in_quick_edit" => false,
+		"sort" => false,
+		"show_in_graphql" => false,
+	];
+	register_taxonomy( "destinations", [ "tours" ], $args );
+}
+add_action( 'init', 'cptui_register_my_taxes_destinations' );
 
 function enqueue_signup_ajax_script() {
     // Enqueue the script
@@ -536,7 +564,7 @@ function track_recently_viewed_tours() {
 
         // If the current tour is not in the array, add it
         if (!in_array($current_tour_id, $recent_tours)) {
-            // Limit to 5 recent tours
+            // Limit to 8 recent tours
             if (count($recent_tours) >= 8) {
                 array_shift($recent_tours); // Remove the oldest one
             }
@@ -549,9 +577,205 @@ function track_recently_viewed_tours() {
 }
 add_action('wp', 'track_recently_viewed_tours');
 
+function remove_add_new_booking_button() {
+    global $submenu;
 
+    // Check if the current post type is 'booking'
+    if (isset($submenu['edit.php?post_type=booking'])) {
+        unset($submenu['edit.php?post_type=booking'][10]); // Remove 'Add New' from submenu
+    }
+}
+add_action('admin_menu', 'remove_add_new_booking_button');
+
+function prevent_direct_access_to_add_new_booking() {
+    global $pagenow;
+
+    // Ensure we're trying to access the 'Add New' page for the 'booking' post type
+    if ($pagenow == 'post-new.php' && isset($_GET['post_type']) && $_GET['post_type'] === 'booking') {
+        wp_redirect(admin_url('edit.php?post_type=booking')); // Redirect to Bookings list
+        exit;
+    }
+}
+add_action('admin_init', 'prevent_direct_access_to_add_new_booking');
+
+function hide_add_new_booking_button_css() {
+    $screen = get_current_screen();
+
+    // Ensure we're on the correct post type screen
+    if ($screen->post_type === 'booking' && $screen->base === 'edit') {
+        echo '<style type="text/css">
+            .page-title-action { display: none; }
+        </style>';
+    }
+}
+add_action('admin_head', 'hide_add_new_booking_button_css');
+
+function disable_booking_editing($actions, $post) {
+    // Check if the post type is 'booking'
+    if ($post->post_type === 'booking') {
+        // Remove the 'Edit' link from the actions
+        unset($actions['edit']);
+    }
+    return $actions;
+}
+add_filter('post_row_actions', 'disable_booking_editing', 10, 2);
+
+function prevent_booking_edit_page_access() {
+    global $pagenow, $post_type;
+
+    // If the user is trying to edit a booking post
+    if ($pagenow == 'post.php' && isset($_GET['post']) && get_post_type($_GET['post']) == 'booking') {
+        wp_redirect(admin_url());
+        exit;
+    }
+}
+add_action('admin_init', 'prevent_booking_edit_page_access');
+
+function make_booking_content_read_only($post) {
+    if ($post->post_type === 'booking') {
+        // Disable content editing in the editor
+        remove_post_type_support('booking', 'editor');
+    }
+}
+add_action('add_meta_boxes', 'make_booking_content_read_only');
+
+function remove_quick_edit_booking($actions, $post) {
+    if ($post->post_type === 'booking') {
+        unset($actions['inline hide-if-no-js']); // Remove Quick Edit
+    }
+    return $actions;
+}
+add_filter('post_row_actions', 'remove_quick_edit_booking', 10, 2);
+
+function enqueue_booking_script() {
+    wp_enqueue_script('jquery'); 
+    wp_enqueue_script('booking-script', get_template_directory_uri() . '/assets/js/booking.js', ['jquery'], null, true);
+
+    wp_localize_script('booking-script', 'bookingAjax', [
+        'ajaxurl'    => admin_url('admin-ajax.php'),  
+        'nonce'      => wp_create_nonce('booking_nonce'),
+        'tourID'     => isset($_GET['post_id']) ? intval($_GET['post_id']) : '', 
+        'members'    => isset($_GET['members']) ? intval($_GET['members']) : 0, 
+        'bookingDate' => isset($_GET['date']) ? sanitize_text_field($_GET['date']) : '', 
+        'bookingTime' => isset($_GET['time']) ? sanitize_text_field($_GET['time']) : '',
+    ]);
+}
+add_action('wp_enqueue_scripts', 'enqueue_booking_script');
+
+function save_booking() {
+    // Check the nonce for security
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'booking_nonce')) {
+        wp_send_json_error(['message' => 'Nonce verification failed']);
+        return;
+    }
+
+    // Sanitize and validate the input data
+    $firstName = isset($_POST['firstName']) ? sanitize_text_field($_POST['firstName']) : '';
+    $lastName = isset($_POST['lastName']) ? sanitize_text_field($_POST['lastName']) : '';
+    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+    $phoneNumber = isset($_POST['phoneNumber']) ? sanitize_text_field($_POST['phoneNumber']) : '';
+    $pickupPoint = isset($_POST['pickupPoint']) ? sanitize_text_field($_POST['pickupPoint']) : '';
+    $primaryTraveler = isset($_POST['primaryTraveler']) ? sanitize_text_field($_POST['primaryTraveler']) : '';
+    $tourID = isset($_POST['tourID']) ? intval($_POST['tourID']) : 0;
+    $members = isset($_POST['members']) ? intval($_POST['members']) : 1;
+    $bookingDate = isset($_POST['bookingDate']) ? sanitize_text_field($_POST['bookingDate']) : '';
+	$bookingTime = isset($_POST['bookingTime']) ? sanitize_text_field($_POST['bookingTime']) : '';
+
+    // Check if all required fields are present
+    if (empty($firstName) || empty($lastName) || empty($email) || empty($phoneNumber) || empty($tourID)) {
+        wp_send_json_error(['message' => 'Required fields are missing']);
+        return;
+    }
+
+    // Prepare the booking data
+    $booking_data = [
+        'post_title' => $firstName . ' ' . $lastName . ' - ' . current_time('Y-m-d H:i:s'),
+        'post_type' => 'booking',
+        'post_status' => 'publish', // You can set to 'draft' if you want to review before publishing
+        'meta_input' => [
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $email,
+            'phone_number' => $phoneNumber,
+            'pickup_point' => $pickupPoint,
+            'primary_traveler' => $primaryTraveler,
+            'tour_id' => $tourID,
+            'members' => $members,
+            'booking_date' => $bookingDate,
+			'booking_time' => $bookingTime,
+        ],
+    ];
+
+    // Insert the booking as a custom post type
+    $booking_id = wp_insert_post($booking_data);
+
+    if ($booking_id) {
+        wp_send_json_success(['message' => 'Booking saved successfully']);
+    } else {
+        wp_send_json_error(['message' => 'Failed to save the booking']);
+    }
+}
+
+// Hook the function to handle AJAX request (both for logged-in and non-logged-in users)
+add_action('wp_ajax_save_booking', 'save_booking');
+add_action('wp_ajax_nopriv_save_booking', 'save_booking');
+
+function add_booking_columns($columns) {
+    $new_columns = [];
+    
+    // Default columns
+    $new_columns['cb'] = $columns['cb'];
+    $new_columns['title'] = __('Booking', 'textdomain');
+    
+    // Custom columns
+    $new_columns['first_name'] = __('First Name', 'textdomain');
+    $new_columns['last_name'] = __('Last Name', 'textdomain');
+    $new_columns['email'] = __('Email', 'textdomain');
+    $new_columns['phone_number'] = __('Phone Number', 'textdomain');
+    $new_columns['pickup_point'] = __('Pickup Point', 'textdomain');
+    $new_columns['primary_traveler'] = __('Primary Traveler', 'textdomain');
+    $new_columns['tour_id'] = __('Tour ID', 'textdomain');
+    $new_columns['members'] = __('Members', 'textdomain');
+    $new_columns['booking_date'] = __('Booking Date', 'textdomain');
+    $new_columns['booking_time'] = __('Booking Time', 'textdomain');
+    
+    return $new_columns;
+}
+add_filter('manage_booking_posts_columns', 'add_booking_columns');
+
+function populate_booking_columns($column, $post_id) {
+    switch ($column) {
+        case 'first_name':
+            echo get_post_meta($post_id, 'first_name', true);
+            break;
+        case 'last_name':
+            echo get_post_meta($post_id, 'last_name', true);
+            break;
+        case 'email':
+            echo get_post_meta($post_id, 'email', true);
+            break;
+        case 'phone_number':
+            echo get_post_meta($post_id, 'phone_number', true);
+            break;
+        case 'pickup_point':
+            echo get_post_meta($post_id, 'pickup_point', true);
+            break;
+        case 'primary_traveler':
+            echo get_post_meta($post_id, 'primary_traveler', true);
+            break;
+        case 'tour_id':
+            echo get_post_meta($post_id, 'tour_id', true);
+            break;
+        case 'members':
+            echo get_post_meta($post_id, 'members', true);
+            break;
+        case 'booking_date':
+            echo get_post_meta($post_id, 'booking_date', true);
+            break;
+        case 'booking_time':
+            echo get_post_meta($post_id, 'booking_time', true);
+            break;
+    }
+}
+add_action('manage_booking_posts_custom_column', 'populate_booking_columns', 10, 2);
 ?>
-
-
-
-
