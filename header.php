@@ -24,9 +24,13 @@
                   </a>
               </div>
               <div class="header-search">
-                  <img src="<?php echo get_template_directory_uri() ?>/assets/img/search.svg" alt="" class="search-button">
-                  <input type="text" placeholder="Search destinations or activities" data-translate-key="Search destinations or activities">
-              </div>
+				  <form role="search" method="get" action="<?php echo home_url('/tours'); ?>" id="searchForm">
+					  <img src="<?php echo get_template_directory_uri() ?>/assets/img/search.svg" alt="" class="search-button">
+					  <input type="text" name="s" id="searchInput" placeholder="Search destinations or activities" autocomplete="off" data-translate-key="Search destinations or activities">
+				  </form>
+				  <!-- Dropdown for displaying search results -->
+				  <ul id="searchResultsDropdown" class="dropdown hidden"></ul>
+			</div>
             </div>
             <div class="navbar">
                 <div class="language-selector">

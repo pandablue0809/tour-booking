@@ -92,7 +92,7 @@ html {
     max-width: 200px;
   }
 
-  .header-search {
+  .header-search form {
     background-color: #F5F5F5;
     border-radius: 20px;
     height: 40px;
@@ -101,6 +101,56 @@ html {
     align-items: center;
     gap: 20px;
   }
+
+  .search-button {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-search input {
+    outline: none;
+    border: none;
+    background: #F5F5F5;
+    font-size: 14px;
+    width: 198px;
+    padding: 0;
+  }
+
+.header-search {
+    position: relative;
+}
+
+#searchResultsDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#searchResultsDropdown li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#searchResultsDropdown li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#searchResultsDropdown li:hover {
+    background-color: #f0f0f0;
+}
+
+.hidden {
+    display: none;
+}
+
 
   .search-button {
     width: 20px;
