@@ -457,7 +457,7 @@ main {
   font-size: 16px;
 }
 
-.search-form {
+.search-form form {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -466,6 +466,38 @@ main {
   width: 60%;
   padding: 5px 5px 5px 20px;
   margin-top: 20px;
+}
+
+
+.search-form  {
+  position: relative;
+}
+
+#searchResultsDropdownTopPage {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#searchResultsDropdownTopPage li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#searchResultsDropdownTopPage li a {
+  text-decoration: none;
+  color: black;
+  display: block;
+}
+
+#searchResultsDropdownTopPage li:hover {
+  background-color: #f0f0f0;
 }
 
 .search-form img {
@@ -3317,7 +3349,7 @@ input[type="range"]::-webkit-slider-thumb {
   .main-search-desc {
     font-size: 12px;
   }
-  .search-form {
+  .search-form form {
     width: 100%;
   }
   .search-btn {
@@ -3332,6 +3364,10 @@ input[type="range"]::-webkit-slider-thumb {
     width: 100%;
     margin-bottom: 10px;
   }
+  .section02-tours {
+    gap: 0;
+  }
+  
   .section02-tour {
     flex: 0 0 100%;
     width: 100%;

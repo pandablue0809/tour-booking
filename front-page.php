@@ -20,15 +20,17 @@
     </li>
   </div>
   <div class="main-fv">
-    <div class="image-slider">
-      <div class="slide">
-        <img src="<?php echo get_template_directory_uri() ?>/assets/img/fv.png" alt="Image 1">
-      </div>
-      <div class="slide">
-        <img src="<?php echo get_template_directory_uri() ?>/assets/img/fv.png" alt="Image 2">
-      </div>
-      <div class="slide">
-        <img src="<?php echo get_template_directory_uri() ?>/assets/img/fv.png" alt="Image 3">
+    <div class="image-slider-container">
+      <div class="image-slider">
+        <div class="slide">
+          <img src="<?php echo get_template_directory_uri() ?>/assets/img/fv.png" alt="Image 1">
+        </div>
+        <div class="slide">
+          <img src="<?php echo get_template_directory_uri() ?>/assets/img/fv.png" alt="Image 2">
+        </div>
+        <div class="slide">
+          <img src="<?php echo get_template_directory_uri() ?>/assets/img/fv.png" alt="Image 3">
+        </div>
       </div>
     </div>
     <div class="opacity-image"></div>    
@@ -40,9 +42,12 @@
               Embark on a personalized adventure where every moment is tailored to bring happiness and fulfillment into your life.
             </p>
             <div class="search-form">
-              <img src="<?php echo get_template_directory_uri() ?>/assets/img/search.svg" alt="">
-              <input class="search-place" type="text" placeholder="Search for a place or activity" data-translate-key="Search for a place or activity">
-              <button class="search-btn" data-translate-key="Search">Search</button>
+              <form role="search" method="get" action="<?php echo home_url('/tours'); ?>" id="searchForm">
+                <img src="<?php echo get_template_directory_uri() ?>/assets/img/search.svg" alt="">
+                <input class="search-place" type="text" name="s" id="searchInputTopPage" placeholder="Search for a place or activity" autocomplete="off" data-translate-key="Search for a place or activity">
+                <button type="submit" class="search-btn" data-translate-key="Search">Search</button>
+              </form>
+              <ul id="searchResultsDropdownTopPage" class="dropdownTopPage hidden"></ul>
             </div>
           </div>
           <button class="fv-prev"><img src="<?php echo get_template_directory_uri() ?>/assets/img/Group 1.svg" alt=""></button>
@@ -170,7 +175,7 @@
       </div>
     </div>
     <div class="more-btn">
-      <a href="" data-translate-key="See more">See more</a>
+      <a href="<?php echo esc_url(get_post_type_archive_link('tours')); ?>" data-translate-key="See more">See more</a>
     </div>
   </section>
   <section class="section03 container">
