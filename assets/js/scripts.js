@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to apply the selected language
     function applyLanguage(language) {
         const lang = sessionStorage.getItem('language') || 'en'; // Default to 'en'
-        fetch(`/wp-content/themes/tour-booking/languages/${lang}.json`)
+        fetch(`/wp-content/themes/wildtour/languages/${lang}.json`)
             .then(response => response.json())
             .then(translations => {
                 document.documentElement.lang = lang;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.translate').forEach(element => {
                 const text = element.getAttribute(`data-name-${lang}`); 
                 if (text) {
-                    element.innerHTML = text;
+                   element.innerHTML = text;
                 }
             });
     }
@@ -116,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
     // On page load, apply the saved currency
     applyCurrency(sessionStorage.getItem('currency') || 'JPY');
 });
@@ -492,4 +491,73 @@ jQuery(document).ready(function($) {
                               "&time=" + encodeURIComponent(time) + 
                               "&post_id=" + encodeURIComponent(post_id);
     });
+});
+
+jQuery(document).ready(function($) {
+  // Handle next button click
+  $('.next-button').on('click', function() {
+    var currentStep = $(this).closest('.step');
+    
+    // Find the before and after confirmation inside the current step
+    var beforeConfirmation = currentStep.find('.before-confirmation');
+    var afterConfirmation = currentStep.find('.after-confirmation');
+    var nextStep = currentStep.next('.step');
+	var nextStepBeforeConfirmation = nextStep.find('.before-confirmation');
+    var nextStepAfterConfirmation = nextStep.find('.after-confirmation');
+	var editBtn = currentStep.find('.tour-booking-detail-edit-btn')
+	var firstName = $('#first_name').val();
+    var lastName = $('#last_name').val();
+    var email = $('#email').val();
+    var phoneNumber = $('#phone_number').val();
+	var travelerOneFirstName = $('#travelerOneFirstName').val();
+	var travelerOneLastName = $('#travelerOneLastName').val();
+	var travelerTwoFirstName = $('#travelerTwoFirstName').val();
+	var travelerTwoLastName = $('#travelerTwoLastName').val();
+	let pickupPoint = '';
+	  if ($('#pickup01').is(':checked')) {
+		  pickupPointKey  = $('#arrival-airline-01').val();
+		  $('#pickup-point').text(pickupPointKey);
+	  } else if ($('#pickup02').is(':checked')) {
+		  pickupPointKey  = "I’ll decide later";
+	  }
+    // Update the after-confirmation fields with the captured values
+    $('.guest-name').text(firstName + ' ' + lastName);
+    $('.guest-email span:last-child').text(email);
+    $('.GUEST-PHONE span:last-child').text(phoneNumber);
+	$('#primary-traveler').html(travelerOneFirstName + ' ' + travelerOneLastName + '<br>' + travelerTwoFirstName + ' ' + travelerTwoLastName);
+    $('#pickup-point').attr('data-translate-key', pickupPointKey).text($(`[data-translate-key="${pickupPointKey}"]`).text());
+    // Move to the next step if it exists
+    if (nextStep.length) {
+      currentStep.removeClass('available'); // Remove 'available' from the current step
+      beforeConfirmation.removeClass('available'); // Hide before confirmation
+      afterConfirmation.addClass('available'); // Show after confirmation
+      nextStep.addClass('available'); // Add 'available' to the next step
+	  nextStepBeforeConfirmation.addClass('available');
+	  editBtn.addClass('available');
+    }
+  });
+
+  // Optionally, handle "Previous" button to go back to the previous step
+  $('.tour-booking-detail-edit-btn').on('click', function() {
+    var currentStep = $(this).closest('.step');
+    var prevStep = currentStep.prev('.step');
+    var beforeConfirmation = currentStep.find('.before-confirmation');
+    var afterConfirmation = currentStep.find('.after-confirmation');
+    var nextStep = currentStep.next('.step');
+	var nextAndNextStep = nextStep.next('.step');
+	var nextStepBeforeConfirmation = nextStep.find('.before-confirmation');
+    var nextStepAfterConfirmation = nextStep.find('.after-confirmation');
+	var editBtn = currentStep.find('.tour-booking-detail-edit-btn');
+	var nextEditBtn = nextStep.find('.tour-booking-detail-edit-btn');
+    if (nextStep.length) {
+      currentStep.addClass('available'); // Remove 'available' from the current step
+      nextStep.removeClass('available'); // Add 'available' to the previous step
+	  beforeConfirmation.addClass('available'); // Hide before confirmation
+      afterConfirmation.removeClass('available');
+	  editBtn.removeClass('available');
+	  nextStepBeforeConfirmation.removeClass('available');
+	  nextStepAfterConfirmation.removeClass('available');
+	  nextEditBtn.removeClass('available');
+    }
+  });
 });
