@@ -213,6 +213,8 @@ $(function() {
   $('input[name="daterange"]').daterangepicker({
     opens: 'left'
   }, function(start, end, label) {
+    $('input[name="daterange"]').val(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+    $('#tour-filters').submit();
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
   });
 });
@@ -560,4 +562,10 @@ jQuery(document).ready(function($) {
 	  nextEditBtn.removeClass('available');
     }
   });
+});
+
+jQuery(document).ready(function($) {
+    $('#tour-filters input').on('change', function() {
+        $('#tour-filters').submit();
+    });
 });

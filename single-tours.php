@@ -136,7 +136,8 @@
 	$social = get_field('social');
     $facebook_link = $social['facebook'];
     $twitter_link = $social['twitter'];
-    $instagram_link = $social['instagram']
+    $instagram_link = $social['instagram'];
+	$tour_time = get_field('tour_time');
     ?>
     <h2 class="translate" data-name-en="<?php echo esc_attr($title_en); ?>" data-name-jp="<?php echo esc_attr($title_jp); ?>"><?php echo esc_attr($title_en); ?></h2>
     <div class="tour-detail-head-star">
@@ -682,10 +683,13 @@
         </div>
         <div class="tour-detail-book-selete-time">
           <select name="tour_time" id="tour_time">
-            <option value="9:00 AM">9:00 AM</option>
-            <option value="10:00 AM">10:00 AM</option>
-            <option value="11:00 AM">11:00 AM</option>
-            <option value="3:00 PM">3:00 PM</option>
+			  <?php 
+				if ($tour_time) {
+					foreach ($tour_time as $time) {
+						echo '<option value="' . $time . '">' . $time . '</option>';
+					}
+				}
+				?>
           </select>
         </div>
         <div class="tour-detail-book-button">
