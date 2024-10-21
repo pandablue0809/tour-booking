@@ -39,7 +39,9 @@
                       foreach ($child_terms as $child) {
                           $child_name_en = get_field('name_en', 'destinations_' . $child->term_id);
                           $child_name_jp = $child->name;
-                          $child_list[] = array('name_en' => $child_name_en, 'name_jp' => $child_name_jp);
+                          $child_category_image = get_field('category_image', 'destinations_' . $child->term_id);
+                          $child_category_image_url = (!empty($child_category_image)) ? esc_url($child_category_image['url']) : get_template_directory_uri() . '/assets/img/32.png'; // Default image
+                          $child_list[] = array('name_en' => $child_name_en, 'name_jp' => $child_name_jp, 'image_url' => $child_category_image_url);
                       }
                   }
                   

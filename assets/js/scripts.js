@@ -583,7 +583,10 @@ jQuery(document).ready(function($) {
         if (children.length > 0) {
             $.each(children, function(index, child) {
                 // Add each child destination to col2
-                $('.col2').append('<p class="translate-child" data-name-en="' + child.name_en + '" data-name-jp="' + child.name_jp + '">' + child.name_en + ' (' + child.name_jp + ')</p>');
+                $('.col2').append('<div class="child-destination">' +
+                    '<img src="' + child.image_url + '" alt="' + child.name_en + '" class="child-image">' +
+                    '<p class="translate child-destination-title" data-name-en="' + child.name_en + '" data-name-jp="' + child.name_jp + '">' + child.name_en + '</p>' +
+                '</div>');
             });
         } else {
             // If no children, show a message or leave it empty
