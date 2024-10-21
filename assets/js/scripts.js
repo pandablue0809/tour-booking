@@ -573,21 +573,24 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
     // On hover of a parent destination in col1
     $('.parent-destination').hover(function() {
-      // Get the child destinations from data-children
-      let children = $(this).data('children');
-  
-      // Clear the current content in col2
-      $('.col2').empty();
-  
-      // Check if there are any child destinations
-      if (children.length > 0) {
-        $.each(children, function(index, child) {
-          // Add each child destination to col2
-          $('.col2').append('<p class="translate-child" data-name-en="' + child.name_en + '" data-name-jp="' + child.name_jp + '">' + child.name_en + ' (' + child.name_jp + ')</p>');
-        });
-      } else {
-        // If no children, show a message or leave it empty
-        $('.col2').append('<p>No child destinations available</p>');
-      }
+        // Get the child destinations from data-children
+        let children = $(this).data('children');
+
+        // Clear the current content in col2
+        $('.col2').empty();
+
+        // Check if there are any child destinations
+        if (children.length > 0) {
+            $.each(children, function(index, child) {
+                // Add each child destination to col2
+                $('.col2').append('<p class="translate-child" data-name-en="' + child.name_en + '" data-name-jp="' + child.name_jp + '">' + child.name_en + ' (' + child.name_jp + ')</p>');
+            });
+        } else {
+            // If no children, show a message or leave it empty
+            $('.col2').append('<p>No child destinations available</p>');
+        }
     });
-  });
+
+    // Trigger hover on the first destination by default
+    $('.parent-destination').first().trigger('mouseenter');
+});

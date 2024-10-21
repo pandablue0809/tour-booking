@@ -374,6 +374,32 @@ main {
   border-radius: 15px;
 }
 
+.sub-header-sub-menu {
+  position: absolute;
+  z-index: 1000;
+  background: white;
+  padding: 10px;
+display:none;
+}
+
+.sub-header-item:hover .sub-header-sub-menu {
+display:flex;
+}
+
+.sub-header-sub-menu .col1 {
+width:100px;
+border-right:1px solid;	
+}
+
+.parent-destination {
+display:block;
+width:100%;	
+}
+
+.parent-destination:hover {
+background-color: #F5F5F5;
+}
+
 .main-fv {
   position: relative;
   width: 100%;
