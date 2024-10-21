@@ -24,19 +24,216 @@ $activities = get_terms(array(
     'order' => 'DESC',   
     'number' => 10,
 ));
-$meta_query = array();
+$meta_query = array('relation' => 'AND'); // Start with AND for all filters
+
+$time_conditions = array();
+
+if (!empty($_GET['time_of_day']) && is_array($_GET['time_of_day'])) {
+    $time_of_days = $_GET['time_of_day'];
+
+    foreach ($time_of_days as $time_of_day) {
+        switch ($time_of_day) {
+            case 'morning':
+                $time_conditions = array_merge($time_conditions, array(
+                    array('key' => 'tour_time', 'value' => '06:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '07:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '08:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '09:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '10:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '11:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '12:00 PM', 'compare' => 'LIKE'), // Corrected PM time
+                ));
+                break;
+
+            case 'afternoon':
+                $time_conditions = array_merge($time_conditions, array(
+                    array('key' => 'tour_time', 'value' => '01:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '02:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '03:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '04:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '05:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '06:00 PM', 'compare' => 'LIKE'),
+                ));
+                break;
+
+            case 'night':
+                $time_conditions = array_merge($time_conditions, array(
+                    array('key' => 'tour_time', 'value' => '07:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '08:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '09:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '10:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '11:00 PM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '12:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '01:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '02:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '03:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '04:00 AM', 'compare' => 'LIKE'),
+                    array('key' => 'tour_time', 'value' => '05:00 AM', 'compare' => 'LIKE'),
+                ));
+                break;
+        }
+    }
+
+    // If there are any time conditions, add them to the meta_query
+    if (!empty($time_conditions)) {
+        $meta_query[] = array(
+            'relation' => 'OR',
+            // Instead of wrapping, directly add time conditions
+            ...$time_conditions  // Unpacks the array to add conditions individually
+        );
+    }
+}
+
+
+if (!empty($_GET['duration'])) {
+    $durations = $_GET['duration']; 
+    $duration_conditions = array();
+
+    foreach ($durations as $duration) {
+        switch ($duration) {
+            case 'oneHour':
+                $duration_conditions[] = array(
+                   array(
+				    'relation' => 'AND',
+                    array(
+                        'key'     => 'experience_time_max_time',
+                        'value'   => 1,
+                        'compare' => '<=',
+                    ),
+                    array(
+                        'key'     => 'experience_time_option',
+                        'value'   => 'hour',
+                        'compare' => '=',
+                    ),
+				   )
+                );
+                break;
+
+            case 'fourHour':
+                $duration_conditions[] = array(
+                    array(
+					'relation' => 'AND',
+                    array(
+                        'key'     => 'experience_time_max_time',
+                        'value'   => 1,
+                        'compare' => '>=',
+                    ),
+                    array(
+                        'key'     => 'experience_time_max_time',
+                        'value'   => 4,
+                        'compare' => '<=',
+                    ),
+                    array(
+                        'key'     => 'experience_time_option',
+                        'value'   => 'hour',
+                        'compare' => '=',
+                    ),
+					)
+                );
+                break;
+
+            case 'oneDay':
+                $duration_conditions[] = array(
+                    array(
+					'relation' => 'AND',
+					array(
+                        'key'     => 'experience_time_max_time',
+                        'value'   => 4,
+                        'compare' => '>=',
+                    ),
+                    array(
+                        'key'     => 'experience_time_option',
+                        'value'   => 'hour',
+                        'compare' => '=',
+                    ),
+					)
+                );
+                break;
+
+            case 'threeDay':
+                $duration_conditions[] = array(
+                    array(
+					'relation' => 'AND',
+                    array(
+                        'key'     => 'experience_time_max_time',
+                        'value'   => 3,
+                        'compare' => '<=',
+                    ),
+                    array(
+                        'key'     => 'experience_time_option',
+                        'value'   => 'day',
+                        'compare' => '=',
+                    ),
+					)
+                );
+                break;
+
+            case 'moreThreeDay':
+                $duration_conditions[] = array(
+                   array(
+				    'relation' => 'AND',
+                    array(
+                        'key'     => 'experience_time_max_time',
+                        'value'   => 3,
+                        'compare' => '>',
+                    ),
+                    array(
+                        'key'     => 'experience_time_option',
+                        'value'   => 'day',
+                        'compare' => '=',
+                    ),
+				   )
+                );
+                break;
+        }
+    }
+
+    // Combine all duration conditions into a single OR relation
+    if (!empty($duration_conditions)) {
+        $meta_query[] = array(
+            'relation' => 'OR',
+            ...$duration_conditions  // Unpacks the array to add conditions individually
+        );
+    }
+}
+
+if (!empty($_GET['min_price']) && !empty($_GET['max_price'])) {
+    $min_price = $_GET['min_price'];
+    $max_price = $_GET['max_price'];
+
+    if (!empty($min_price) && !empty($_GET['max_price'])) {
+        $meta_query[] = array(
+            'relation' => 'OR',
+            array(
+                'relation' => 'AND',
+               array(
+                'key'     => 'price_usd',
+                'value'   => $min_price,
+                'compare' => '>=',
+               ),
+               array(
+                'key'     => 'price_usd',
+                'value'   => $max_price,
+                'compare' => '<=',
+               )
+            )  // Unpacks the array to add conditions individually
+        );
+    }
+}
+
 $tax_query = array();
 
 $args = array(
-    'post_type' => 'tours',
+    'post_type'      => 'tours',
     'posts_per_page' => -1,
-    'tax_query' => array(
+    'tax_query'      => array(
         array(
             'taxonomy' => 'destinations',
             'field'    => 'slug',
             'terms'    => $term->slug, 
         ),
-    ),   
+    ),
+    'meta_query'     => $meta_query, // Use the meta query built above
 );
 
 $query = new WP_Query($args);
@@ -160,12 +357,12 @@ $wp_query = $query;
                                     <div class="price-input-container">
                                         <div class="price-input">
                                             <div class="price-field">
-                                                <span class="price-field-value"><span>¥</span><span
+                                                <span class="price-field-value"><span>$</span><span
                                                         data-translate-key="min">min</span></span>
                                                 <input type="number" name="min_price" class="min-input" value="<?php echo isset($_GET['min_price']) ? esc_attr($_GET['min_price']) : '0'; ?>">
                                             </div>
                                             <div class="price-field">
-                                                <span class="price-field-value"><span>¥</span><span
+                                                <span class="price-field-value"><span>$</span><span
                                                         data-translate-key="max">max</span></span>
                                                 <input type="number" name="max_price" class="max-input" value="<?php echo isset($_GET['max_price']) ? esc_attr($_GET['max_price']) : '10000'; ?>">
                                             </div>
@@ -589,7 +786,7 @@ $wp_query = $query;
                                 </div>
                                 <div class="tour-item-desc-time">
                                     <img src="<?php echo get_template_directory_uri() ?>/assets/img/set_of_glyph_clocks.png" alt="">
-                                    <span><?php echo esc_attr($maxTime); ?><span data-translate-key="<?php echo esc_attr($timeOption); ?>"></span></span>
+                                    <span><?php echo esc_attr($maxTime); ?><span data-translate-key="<?php echo esc_attr($timeOption); ?>"><?php echo esc_attr($timeOption); ?></span></span>
                                 </div>
                                 <?php 
                                     if($free_cancellation === true) 
