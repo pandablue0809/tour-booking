@@ -8,65 +8,66 @@
         <span data-translate-key="Explore destinations">Explore destinations</span>
       </a>
       <div class="sub-header-sub-menu">
-        <div class="col1">
-          <?php 
-            $args = array(
-              'taxonomy' => 'destinations',
-              'hide_empty' => false,
-              'parent' => 0,
-            );
-            $terms = get_terms($args);
+      <div class="col1">
+        <?php 
+          $args = array(
+            'taxonomy' => 'destinations',
+            'hide_empty' => false,
+            'parent' => 0,
+          );
+          $terms = get_terms($args);
 
-            $terms = array_filter($terms, function($term) {
-                return $term->slug !== 'uncategorized';
-            });
+          $terms = array_filter($terms, function($term) {
+              return $term->slug !== 'uncategorized';
+          });
 
-            if (!empty($terms) && !is_wp_error($terms)) {
-                foreach ($terms as $term) {
-                    $name_en = get_field('name_en', 'destinations_' . $term->term_id); 
-                    $name_jp = $term->name;
+          if (!empty($terms) && !is_wp_error($terms)) {
+              foreach ($terms as $term) {
+                  $name_en = get_field('name_en', 'destinations_' . $term->term_id); 
+                  $name_jp = $term->name;
 
-                    // Get child destinations
-                    $child_args = array(
-                      'taxonomy' => 'destinations',
-                      'hide_empty' => false,
-                      'parent' => $term->term_id,
-                    );
-                    $child_terms = get_terms($child_args);
-                    $child_list = array();
+                  // Get child destinations
+                  $child_args = array(
+                    'taxonomy' => 'destinations',
+                    'hide_empty' => false,
+                    'parent' => $term->term_id,
+                  );
+                  $child_terms = get_terms($child_args);
+                  $child_list = array();
 
-                    if (!empty($child_terms)) {
-                        foreach ($child_terms as $child) {
-                            $child_name_en = get_field('name_en', 'destinations_' . $child->term_id);
-                            $child_name_jp = $child->name;
-                            $child_category_image = get_field('category_image', 'destinations_' . $child->term_id);
-                            $child_category_image_url = (!empty($child_category_image)) ? esc_url($child_category_image['url']) : get_template_directory_uri() . '/assets/img/32.png'; // Default image
-                            $child_list[] = array('name_en' => $child_name_en, 'name_jp' => $child_name_jp, 'image_url' => $child_category_image_url);
-                        }
-                    }
-                    
-                    ?>
-                    <a href="<?php echo esc_url(get_term_link($term)); ?>" 
-                      class="parent-destination" 
-                      data-children='<?php echo json_encode($child_list); ?>'>                                             
-                      <p class="translate" data-name-en="<?php echo esc_attr($name_en); ?>" 
-                      data-name-jp="<?php echo esc_attr($name_jp); ?>"></p>                      
-                    </a>
-                    <?php
-                }
-            } else {
-                echo '<p>No destinations found.</p>';
-            }
-          ?>
-        </div>
-        <div class="col2"></div>
+                  if (!empty($child_terms)) {
+                      foreach ($child_terms as $child) {
+                          $child_name_en = get_field('name_en', 'destinations_' . $child->term_id);
+                          $child_name_jp = $child->name;
+						  $child_category_image = get_field('category_image', 'destinations_' . $child->term_id);
+                          $child_category_image_url = (!empty($child_category_image)) ? esc_url($child_category_image['url']) : get_template_directory_uri() . '/assets/img/32.png'; // Default image
+						  $child_term_link = get_term_link($child);
+                          $child_list[] = array('name_en' => $child_name_en, 'name_jp' => $child_name_jp, 'image_url' => $child_category_image_url,'link' => esc_url($child_term_link));
+                      }
+                  }
+                  
+                  ?>
+                  <a href="<?php echo esc_url(get_term_link($term)); ?>" 
+                    class="parent-destination" 
+                    data-children='<?php echo json_encode($child_list); ?>'>                                             
+                    <p class="translate" data-name-en="<?php echo esc_attr($name_en); ?>" 
+                    data-name-jp="<?php echo esc_attr($name_jp); ?>"></p>                      
+                  </a>
+                  <?php
+              }
+          } else {
+              echo '<p>No destinations found.</p>';
+          }
+        ?>
+      </div>
+      <div class="col2"></div>
       </div>
     </li>
     <li class="sub-header-item">
       <a href="" class="sub-header-item-category">
         <span data-translate-key="All categories">All categories</span>
       </a>
-      <div class="sub-header-sub-menu">
+		<div class="sub-header-sub-menu">
         <div class="col">
           <?php 
             $args = array(
@@ -87,8 +88,7 @@
                     
                     ?>
                     <a href="<?php echo esc_url(get_term_link($term)); ?>" 
-                      class="parent-destination" 
-                      data-children='<?php echo json_encode($child_list); ?>'>                                             
+                      class="parent-destination">                                             
                       <p class="translate" data-name-en="<?php echo esc_attr($name_en); ?>" 
                       data-name-jp="<?php echo esc_attr($name_jp); ?>"></p>                      
                     </a>
@@ -105,7 +105,7 @@
       <a href="" class="sub-header-item-tuor">
         <span data-translate-key="Tours & experience">Tours & experience</span>
       </a>
-      <div class="sub-header-sub-menu">
+		<div class="sub-header-sub-menu">
         <div class="col">
           <?php 
             $args = array(
@@ -386,7 +386,7 @@
             'taxonomy' => 'destinations',
             'hide_empty' => false,
             'number' => 10, 
-			      'parent' => 0,
+			'parent' => 0,
         );
 
         $terms = get_terms($args);

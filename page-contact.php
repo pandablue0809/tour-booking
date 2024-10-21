@@ -1,5 +1,7 @@
 <?php get_header()?>
-
+<?php 
+  $receiver_email = isset($_GET['email']) ? $_GET['email'] : get_option('admin_email');
+?>
 <main>
   <div class="contact-fv">
       <div class="opacity-image"></div>
@@ -16,15 +18,17 @@
   <section class="contact-section02">
     <div class="container">
       <div class="contact-form">
-        <form action="">
+        <form id="contactForm" method="POST">
           <div class="contact-form-item">
             <div class="contact-form-label">
               <span class="required" data-translate-key="Required">Required</span>
               <label for="" data-translate-key="Question categories">Question categories</label>
             </div>
             <div class="contact-form-input">
-              <select name="" id="">
-                <option value="" data-translate-key="Please select">Please select</option>                  
+              <select name="category" id="category" required>
+                <option value="" data-translate-key="Please select">Please select</option> 
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Technical Support">Technical Support</option>                 
               </select>
             </div>
           </div>  
@@ -34,7 +38,7 @@
               <label for="" data-translate-key="Inquiry contents">Inquiry contents</label>
             </div>
             <div class="contact-form-input">
-              <textarea name="" id="" rows="3"></textarea>
+              <textarea name="message" id="message" rows="3" required></textarea>
               <p class="contact-form-input-desc">
               <span data-translate-key="Please enter your reservation number">※Please enter your reservation number.</span> <br>
               <span data-translate-key="For those who have">(For those who have already made a reservation)</span>
@@ -47,7 +51,7 @@
               <label for="" data-translate-key="mail address">mail address</label>
             </div>
             <div class="contact-form-input">
-              <input type="text">
+              <input type="email" name="email" id="email" required>
             </div>
           </div> 
           <div class="contact-form-item">
@@ -56,7 +60,7 @@
               <label for="" data-translate-key="Name">Name</label>
             </div>
             <div class="contact-form-input">
-              <input type="text">
+              <input type="text" name="name" id="name">
             </div>
           </div>
           <div class="contact-form-item">
@@ -65,7 +69,7 @@
               <label for="" data-translate-key="Phone number">Phone number</label>
             </div>
             <div class="contact-form-input">
-              <input type="text">
+              <input type="text" name="phone" id="phone">
             </div>
           </div>
           <div class="contact-form-item">
@@ -78,6 +82,7 @@
             <input type="submit" value="Confirm the contents">
           </div>                    
         </form>
+        <div id="formResponse"></div>
       </div>
     </div>
   </section>
@@ -90,206 +95,66 @@
   <section class="section08 container">
     <h2 class="section-title" data-translate-key="Popular Cities">Popular Cities</h2>
     <ul class="section08-desc">
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Things to do in Tokyo">Things to do in Tokyo</a>
-      </li>
+      <?php
+        $args = array(
+            'taxonomy' => 'destinations',
+            'hide_empty' => false,
+            'number' => 30, 
+			'parent' => 0,
+        );
+
+        $terms = get_terms($args);
+
+        $terms = array_filter($terms, function($term) {
+            return $term->slug !== 'uncategorized';
+        });
+
+        if (!empty($terms) && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                $name_en = get_field('name_en', 'destinations_' . $term->term_id); 
+                $name_jp = $term->name;
+                ?>
+                <li class="section08-city">
+                  <a href="<?php echo esc_url(get_term_link($term)); ?>" class="translate" data-name-en="Things to do in <?php echo esc_attr($name_en); ?>" data-name-jp="<?php echo esc_attr($name_jp); ?>でやるべきこと" ></a>
+                </li>
+                <?php
+            }
+        } else {
+            echo '<p>No destinations found.</p>';
+        }
+      ?>
     </ul>
   </section>
   <section class="section09 container">
     <h2 class="section-title" data-translate-key="Popular Attractions">Popular Attractions</h2>
     <ul class="section08-desc">
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
-      <li class="section08-city">
-        <a href="" data-translate-key="Mt. Fuji (Fuji-san) ">Mt. Fuji (Fuji-san) </a>
-      </li>
+      <?php
+        $args = array(
+            'taxonomy' => 'attractions',
+            'hide_empty' => false,
+            'number' => 30, 
+        );
+
+        $terms = get_terms($args);
+
+        $terms = array_filter($terms, function($term) {
+            return $term->slug !== 'uncategorized';
+        });
+
+        if (!empty($terms) && !is_wp_error($terms)) {
+            foreach ($terms as $term) {
+                $name_en = get_field('name_en', 'attractions_' . $term->term_id); 
+                $name_jp = $term->name;
+                ?>
+                <li class="section08-city">
+                  <a href="<?php echo esc_url(get_term_link($term)); ?>" class="translate" data-name-en="<?php echo esc_attr($name_en); ?>" data-name-jp="<?php echo esc_attr($name_jp); ?>" ></a>
+                </li>
+                <?php
+            }
+        } else {
+            echo '<p>No attractions found.</p>';
+        }
+      ?>
     </ul>
   </section>
 </main>
