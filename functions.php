@@ -873,4 +873,47 @@ function ajax_search() {
 add_action('wp_ajax_nopriv_ajax_search', 'ajax_search');
 add_action('wp_ajax_ajax_search', 'ajax_search');
 
+function enqueue_contact_ajax_script() {
+    // Enqueue the script
+    wp_enqueue_script('contact-ajax', get_template_directory_uri() . '/assets/js/contact.js', array('jquery'), null, true);
+
+    // Pass the AJAX URL and nonce to the script
+    wp_localize_script('contact-ajax', 'contactAjax', array(
+        'ajaxurl' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ajax-contact-nonce')
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_contact_ajax_script');
+
+function ajax_contact() {
+    // Check nonce for security
+    check_ajax_referer('ajax-contact-nonce', 'nonce');
+    // Fetch form data
+    $category = sanitize_text_field($_POST['category']);
+    $message = sanitize_text_field($_POST['message']);
+    $email = sanitize_email($_POST['email']);
+    $name = sanitize_text_field($_POST['name']);
+    $phone = sanitize_text_field($_POST['phone']);
+    $receiverEmail = sanitize_email($_POST['receiverEmail']);  
+
+    $email_content = "You have a new message from the contact form:\n\n";
+    $email_content .= "Category: $category\n";
+    $email_content .= "Message: $message\n";
+    $email_content .= "Email: $email\n";
+    $email_content .= "Name: $name\n";
+    $email_content .= "Phone: $phone\n";
+    $recipient = $receiverEmail;
+    $subject = 'New Contact Form Submission';
+    if (wp_mail($recipient, $subject, $email_content)) {
+        wp_send_json_success(array('message' => 'Email sent successfully!'));
+    } else {
+        wp_send_json_error(array('message' => 'Failed to send the email.'));
+    }
+    wp_die();
+}
+
+// Hook into AJAX
+add_action('wp_ajax_nopriv_contact', 'ajax_contact');
+add_action('wp_ajax_contact', 'ajax_contact');
+
 ?>

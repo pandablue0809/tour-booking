@@ -19,6 +19,7 @@
     <div class="container">
       <div class="contact-form">
         <form id="contactForm" method="POST">
+          <input type="email" id="receiver_email" value="<?php echo esc_attr($receiver_email); ?>" hidden>
           <div class="contact-form-item">
             <div class="contact-form-label">
               <span class="required" data-translate-key="Required">Required</span>
@@ -74,7 +75,7 @@
           </div>
           <div class="contact-form-item">
             <label class="contact-form-checkbox">
-              <input type="checkbox">
+              <input type="checkbox" name="agreement" id="agreement" required>
               <span data-translate-key="I agree to the">I agree to the "Personal Information Handling Agreement".</span>
             </label>              
           </div> 
@@ -88,8 +89,8 @@
   </section>
   <section class="contact-section03">
     <div class="container">
-      <h2 class="contact-section03-title" data-translate-key="About site name">About "site name"</h2>
-      <p class="contact-section03-desc" data-translate-key="sitedescription">"site name" is the premier activity booking platform in Japan, offering easy access to a vast selection of experiences across the nation. With partnerships encompassing over 6,000 suppliers, we provide an extensive range of more than 400 activity types, including over 18,000 outdoor adventures, DIY experiences, day trips, leisure pursuits, and online experiences. Available in Japanese, Mandarin (Traditional and Simplified), Korean, and Thai, "site name" caters to a global clientele, whether booking online or through travel agencies. Our network includes over 200 online media outlets that feature popular budget tours and the latest travel tips for both domestic and international destinations. Enjoy exclusive discounts, best-price guarantees, and earn points on every booking. Book today and discover the best-priced outdoor activities, day trips, leisure activities, and online experiences with "site name"!</p>
+      <h2 class="contact-section03-title" data-translate-key="About site name">About Wild Tour</h2>
+      <p class="contact-section03-desc" data-translate-key="sitedescription">wild Tour is the premier activity booking platform in Japan, offering easy access to a vast selection of experiences across the nation. With partnerships encompassing over 6,000 suppliers, we provide an extensive range of more than 400 activity types, including over 18,000 outdoor adventures, DIY experiences, day trips, leisure pursuits, and online experiences. Available in Japanese, Mandarin (Traditional and Simplified), Korean, and Thai, "site name" caters to a global clientele, whether booking online or through travel agencies. Our network includes over 200 online media outlets that feature popular budget tours and the latest travel tips for both domestic and international destinations. Enjoy exclusive discounts, best-price guarantees, and earn points on every booking. Book today and discover the best-priced outdoor activities, day trips, leisure activities, and online experiences with "site name"!</p>
     </div>
   </section>
   <section class="section08 container">
